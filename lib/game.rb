@@ -1,5 +1,3 @@
-require_relative 'messages'
-
 class Game
   def initialize(messages)
     @messages = messanges
