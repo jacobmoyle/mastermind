@@ -1,6 +1,6 @@
 class CodeGenerator
   def initialize
-    @pool = ["A","B","C","D","E","F"]
+    @character_pool = ["A","B","C","D","E","F"]
     @code_length = 4
   end
 
@@ -13,6 +13,6 @@ class CodeGenerator
   end
 
   def random_character
-    @pool.sample
+    @character_pool.sample
   end
 end
