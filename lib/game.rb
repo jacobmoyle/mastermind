@@ -2,16 +2,18 @@ require_relative 'messages'
 
 class Game
   def initialize
-    @messenger = Messages.new
+    @messages = Messages.new
+    run
   end
 
-  def start
-    @messenger.greeting
+  def run
+    @messages.greet
     get_user_input
-    @messenger.goodbye
+    @messages.goodbye
   end
 
   def get_user_input
+    @messages.prompt_input
     gets.chomp
   end
 end
