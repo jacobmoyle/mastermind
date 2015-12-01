@@ -7,6 +7,11 @@ class Game
 
   def start
     @messenger.greeting
+    get_user_input
     @messenger.goodbye
+  end
+
+  def get_user_input
+    gets.chomp
   end
 end
