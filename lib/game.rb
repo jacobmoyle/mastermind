@@ -1,8 +1,8 @@
 require_relative 'messages'
 
 class Game
-  def initialize
-    @messages = Messages.new
+  def initialize(messages)
+    @messages = messanges
     run
   end
 
