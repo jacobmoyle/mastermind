@@ -1,6 +1,6 @@
 class Game
   def initialize(messages)
-    @messages = messanges
+    @messages = messages
     start
   end
 
