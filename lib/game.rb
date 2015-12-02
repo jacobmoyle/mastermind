@@ -1,16 +1,27 @@
 class Game
   def initialize(messages)
-    @messages = messanges
+    @messages = messages
+    @total_guesses = 10
     start
   end
 
   def start
     @messages.greet
-    get_user_input
+
+    until @total_guesses == 0
+      player_turn
+      @total_guesses -= 1
+    end
+
     @messages.goodbye
   end
 
-  def get_user_input
+  def player_turn
+    @messages.prompt_guess(@total_guesses)
+    user_input
+  end
+
+  def user_input
     @messages.prompt_input
     gets.chomp
   end
