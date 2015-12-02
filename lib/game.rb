@@ -6,12 +6,13 @@ class Game
 
   def start
     @messages.greet
-    get_user_input
-    @messages.goodbye
-  end
 
-  def get_user_input
-    @messages.prompt_input
-    gets.chomp
+    guesses = 10
+    until guesses == 0
+      @messages.player_turn(guesses)
+      guesses -= 1
+    end
+
+    @messages.goodbye
   end
 end
