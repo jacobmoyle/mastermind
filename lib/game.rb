@@ -1,10 +1,10 @@
 class Game
   def initialize(messages)
     @messages = messanges
-    run
+    start
   end
 
-  def run
+  def start
     @messages.greet
     get_user_input
     @messages.goodbye
