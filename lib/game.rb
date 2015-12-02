@@ -9,10 +9,16 @@ class Game
 
     guesses = 10
     until guesses == 0
-      @messages.player_turn(guesses)
+      @messages.prompt_guess(guesses)
+      user_input
       guesses -= 1
     end
 
     @messages.goodbye
+  end
+
+  def user_input
+    @messages.prompt_input
+    gets.chomp
   end
 end

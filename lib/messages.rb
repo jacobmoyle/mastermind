@@ -23,17 +23,14 @@ class Messages
     puts '[enter] key.                                        '
   end
 
-  def player_turn(remaining_guesses)
+  def prompt_guess(remaining_guesses)
     puts ''
     puts "You have #{remaining_guesses} guesses left."
     puts 'What is your guess?'
-    get_user_input
   end
 
-  # Does it makes sense for Messages to take user input
-  def get_user_input
+  def prompt_input
     print '> '
-    gets.chomp
   end
 
   def goodbye
