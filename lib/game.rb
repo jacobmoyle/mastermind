@@ -7,22 +7,24 @@ class Game
 
   def start
     @messages.greet
-
-    until @total_guesses == 0
+    until game_over
       player_turn
-      @total_guesses -= 1
     end
-
     @messages.goodbye
   end
 
   def player_turn
     @messages.prompt_guess(@total_guesses)
     user_input
+    @total_guesses -= 1
   end
 
   def user_input
     @messages.prompt_input
     gets.chomp
+  end
+
+  def game_over
+    @total_guesses == 0
   end
 end
