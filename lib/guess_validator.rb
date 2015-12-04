@@ -14,11 +14,21 @@ class GuessValidator
   attr_accessor :unsolved_code
 
   def initialize(unsolved_code)
-    @unsolved_code = unsolved_code
+    @unsolved_code = convert_to_arr(unsolved_code)
   end
 
-  def validate(player_code)
-    @unsolved_code == player_code ? true : false
+  def validate(guess)
+    player_code = convert_to_arr(guess)
+
+    answer = ''
+    @unsolved_code.each_with_index do |char, curr_index|
+      answer.concat('o') if char == player_code[curr_index]
+    end
+    answer
+  end
+
+  def convert_to_arr(string)
+    string.split('')
   end
 
 end
