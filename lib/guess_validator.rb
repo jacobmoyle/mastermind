@@ -17,5 +17,8 @@ class GuessValidator
     @unsolved_code = unsolved_code
   end
 
+  def validate(player_code)
+    true
+  end
 
 end
