@@ -12,6 +12,7 @@ Provides feedback
 
 class GuessValidator
   attr_accessor :unsolved_code
+
   def initialize(unsolved_code)
     @unsolved_code = unsolved_code
   end
