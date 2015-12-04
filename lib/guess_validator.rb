@@ -19,8 +19,8 @@ class GuessValidator
 
   def validate(guess)
     player_code = convert_to_arr(guess)
-
     answer = ''
+
     @unsolved_code.each_with_index do |char, curr_index|
       answer.concat('o') if char == player_code[curr_index]
     end
