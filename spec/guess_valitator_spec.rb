@@ -10,9 +10,10 @@ describe GuessValidator do
       expect(subject).to respond_to(:unsolved_code)
     end
     it 'is writeable' do
-      old_code = subject.unsolved_code
-      subject.unsolved_code = "1234"
-      expect(subject.unsolved_code).to_not eq(old_code)
+      validator = GuessValidator.new(new_code)
+      previous_code = validator.unsolved_code
+      validator.unsolved_code = "1234"
+      expect(validator.unsolved_code).to_not eq(previous_code)
     end
   end
 
@@ -23,6 +24,11 @@ describe GuessValidator do
     context 'when guess is correct' do
       it 'responds with true' do
         expect(subject.validate("ABCD")).to eq(true)
+      end
+    end
+    context 'when guess is incorrect' do
+      it 'responds with false' do
+        expect(subject.validate("1234")).to eq(false)
       end
     end
   end
