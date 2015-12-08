@@ -11,10 +11,10 @@ Provides feedback
 =end
 
 class GuessValidator
-  attr_accessor :unsolved_code
+  attr_reader :unsolved_code
 
   def initialize(unsolved_code)
-    @unsolved_code = convert_to_arr(unsolved_code)
+    set_code(unsolved_code)
   end
 
   def validate(guess)
@@ -24,7 +24,12 @@ class GuessValidator
     @unsolved_code.each_with_index do |char, curr_index|
       answer.concat('o') if char == player_code[curr_index]
     end
+
     answer
+  end
+
+  def set_code(new_code)
+    @unsolved_code = convert_to_arr(new_code)
   end
 
   def convert_to_arr(string)

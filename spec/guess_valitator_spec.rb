@@ -5,15 +5,18 @@ describe GuessValidator do
   subject { GuessValidator.new(new_code) }
 
   describe '#unsolved_code' do
-    # This seems like a code smell
     it 'responds to method call (readable)' do
       expect(subject).to respond_to(:unsolved_code)
     end
-    # Not longer works, needs to be updated as class now splits the string
-    it 'is writeable' do
+  end
+
+  describe '#set_code' do
+
+    it 'changes the unsolved code' do
       validator = GuessValidator.new(new_code)
       previous_code = validator.unsolved_code
-      validator.unsolved_code = "1234"
+      validator.set_code("1234")
+
       expect(validator.unsolved_code).to_not eq(previous_code)
     end
   end
