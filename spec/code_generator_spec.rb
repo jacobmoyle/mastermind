@@ -3,7 +3,7 @@ require_relative '../lib/code_generator'
 describe CodeGenerator do
 
   describe '#generate' do
-
+    # don't care about the type being output, just expect it to respond
     it 'returns a string' do
       expect(subject.generate.class).to be(String)
     end
@@ -13,6 +13,7 @@ describe CodeGenerator do
     it 'does not output blank spaces' do
       expect(subject.generate.include?(" ")).to be(false)
     end
+    # Create a test to make sure the characters in the pool are correct. It's safe to test this because the characters are in the spec, rather than unknown
     it 'returns unique patterns 75% of the time' do
       patterns = []
       500.times do
