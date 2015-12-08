@@ -27,6 +27,11 @@ describe GuessValidator do
       expect(subject).to respond_to(:validate).with(1).argument
     end
 
+    it 'can accept uppercase or lowercase input' do
+      expect(subject.validate('a234')).to eq('o')
+      expect(subject.validate('A234')).to eq('o')
+    end
+
     context 'when guess is completely correct' do
       it 'responds with true' do
         expect(subject.validate('ABCD')).to eq('oooo')
