@@ -37,7 +37,11 @@ class GuessValidator
   end
 
   def convert_to_arr(string)
-    string.split('')
+    clean(string).split('')
+  end
+
+  def clean(new_code)
+    new_code.upcase
   end
 
 end
