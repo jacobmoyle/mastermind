@@ -33,7 +33,7 @@ class Messages
     print '> '
   end
 
-  def guess_feedback(feedback = '')
+  def feedback(feedback = '')
     puts "Guess Feedback: #{feedback}"
   end
 
