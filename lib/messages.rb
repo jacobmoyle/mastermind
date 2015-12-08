@@ -33,6 +33,10 @@ class Messages
     print '> '
   end
 
+  def guess_feedback(feedback = '')
+    puts "Guess Feedback: #{feedback}"
+  end
+
   def goodbye
     puts 'Goodbye.'
   end
