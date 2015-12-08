@@ -22,7 +22,11 @@ class GuessValidator
     answer = ''
 
     @unsolved_code.each_with_index do |char, curr_index|
-      answer.concat('o') if char == player_code[curr_index]
+      if char == player_code[curr_index]
+        answer.concat('o')
+      elsif player_code.include?(char)
+        answer.concat('x')
+      end
     end
 
     answer

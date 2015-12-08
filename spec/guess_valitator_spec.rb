@@ -47,7 +47,10 @@ describe GuessValidator do
       end
 
       it 'provides x if a character is correct but in the incorrect spot' do
-
+        expect(subject.validate('1A34')).to eq('x')
+        expect(subject.validate('B234')).to eq('x')
+        expect(subject.validate('123C')).to eq('x')
+        expect(subject.validate('1D34')).to eq('x')
       end
     end
   end
