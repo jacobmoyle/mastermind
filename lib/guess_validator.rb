@@ -13,47 +13,46 @@ Provides feedback
 class GuessValidator
   attr_reader :unsolved_code
 
-  def initialize(unsolved_code)
-    set_code(unsolved_code)
+  def initialize(new_code)
+    set_code(new_code)
     @response_template = Struct.new(:feedback, :error)
   end
 
-  def validate(guess)
-    player_code = convert_to_arr(guess)
+  def set_code(code)
+    @unsolved_code = format_code(code)
+  end
 
-    response = @response_template.new('', nil)
-
-    error_check(player_code, response)
+  def validate(player_guess)
+    player_code = format_code(player_guess)
+    prepare_new_response
+    error_check(player_code)
 
     @unsolved_code.each_with_index do |char, curr_index|
       if char == player_code[curr_index]
-        response.feedback.concat('o')
+        @response.feedback.concat('o')
       elsif player_code.include?(char)
-        response.feedback.concat('x')
+        @response.feedback.concat('x')
       end
     end
 
-    response
+    @response
   end
 
-  def error_check(code, response)
+  private
+
+  def prepare_new_response
+    @response = @response_template.new('', nil)
+  end
+
+  def error_check(code)
     if code.length > @unsolved_code.length
-      response.error = 'Input is too long.'
+      @response.error = 'Input is too long.'
     elsif code.length < @unsolved_code.length
-      response.error = 'Input is too short.'
+      @response.error = 'Input is too short.'
     end
   end
 
-  def set_code(new_code)
-    @unsolved_code = convert_to_arr(new_code)
+  def format_code(guess)
+    guess.upcase.split('')
   end
-
-  def convert_to_arr(string)
-    clean(string).split('')
-  end
-
-  def clean(new_code)
-    new_code.upcase
-  end
-
 end
