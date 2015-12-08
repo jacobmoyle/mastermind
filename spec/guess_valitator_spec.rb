@@ -23,6 +23,11 @@ describe GuessValidator do
 
   describe '#validate' do
 
+    it 'responds with an error if input is too long' do
+      expect(error_for('12345667')).to_not eq(nil)
+      expect(error_for('1')).to_not eq(nil)
+    end
+
     it 'responds to the method with param' do
       expect(subject).to respond_to(:validate).with(1).argument
     end
@@ -65,4 +70,8 @@ end
 # Helper Methods
 def feedback_for(guess)
   subject.validate(guess).feedback
+end
+
+def error_for(guess)
+  subject.validate(guess).error
 end

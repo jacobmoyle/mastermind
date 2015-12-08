@@ -15,13 +15,15 @@ class GuessValidator
 
   def initialize(unsolved_code)
     set_code(unsolved_code)
-    @response_template = Struct.new(:feedback)
+    @response_template = Struct.new(:feedback, :error)
   end
 
   def validate(guess)
     player_code = convert_to_arr(guess)
 
-    response = @response_template.new('')
+    response = @response_template.new('', nil)
+
+    error_check(player_code, response)
 
     @unsolved_code.each_with_index do |char, curr_index|
       if char == player_code[curr_index]
@@ -32,6 +34,14 @@ class GuessValidator
     end
 
     response
+  end
+
+  def error_check(code, response)
+    if code.length > @unsolved_code.length
+      response.error = 'Input is too long.'
+    elsif code.length < @unsolved_code.length
+      response.error = 'Input is too short.'
+    end
   end
 
   def set_code(new_code)
