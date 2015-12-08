@@ -17,6 +17,7 @@ class Game
 
   def player_turn
     @messages.prompt_guess(@remaining_guesses)
+    p "target: #{@guess_checker.unsolved_code}"
     p @guess_checker.validate(user_input)
     @remaining_guesses -= 1
   end
