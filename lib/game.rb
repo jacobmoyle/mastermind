@@ -2,7 +2,6 @@ class Game
   def initialize(messages)
     @messages = messages
     @total_guesses = 10
-    start
   end
 
   def start
