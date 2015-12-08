@@ -46,6 +46,7 @@ describe GuessValidator do
         expect(subject.validate('123D')).to eq('o')
       end
 
+      # No tests written to cover duplicate characters
       it 'provides x if a character is correct but in the incorrect spot' do
         expect(subject.validate('1A34')).to eq('x')
         expect(subject.validate('B234')).to eq('x')
