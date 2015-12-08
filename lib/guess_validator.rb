@@ -15,21 +15,24 @@ class GuessValidator
 
   def initialize(unsolved_code)
     set_code(unsolved_code)
+    @response_template = Struct.new(:feedback)
   end
 
   def validate(guess)
     player_code = convert_to_arr(guess)
-    answer = ''
+
+
+    response = @response_template.new('')
 
     @unsolved_code.each_with_index do |char, curr_index|
       if char == player_code[curr_index]
-        answer.concat('o')
+        response.feedback.concat('o')
       elsif player_code.include?(char)
-        answer.concat('x')
+        response.feedback.concat('x')
       end
     end
 
-    answer
+    response
   end
 
   def set_code(new_code)
