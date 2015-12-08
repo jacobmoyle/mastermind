@@ -1,21 +1,27 @@
 class Game
-  def initialize(messages)
-    @messages = messages
-    @total_guesses = 10
+  def initialize(terminal_messages, code_validator, guesses = 10)
+    @messages          = terminal_messages
+    @guess_checker     = code_validator
+    @remaining_guesses = guesses
   end
 
   def start
     @messages.greet
+
     until game_over
       player_turn
     end
+
     @messages.goodbye
   end
 
   def player_turn
-    @messages.prompt_guess(@total_guesses)
-    user_input
-    @total_guesses -= 1
+    @messages.prompt_guess(@remaining_guesses)
+
+    p "target: #{@guess_checker.unsolved_code}"
+    feedback = @guess_checker.validate(user_input)
+    @messages.guess_feedback(feedback)
+    @remaining_guesses -= 1
   end
 
   def user_input
@@ -24,6 +30,6 @@ class Game
   end
 
   def game_over
-    @total_guesses == 0
+    @remaining_guesses == 0
   end
 end
