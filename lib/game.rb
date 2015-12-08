@@ -17,7 +17,7 @@ class Game
 
   def player_turn
     @messages.prompt_guess(@remaining_guesses)
-    user_input
+    p @guess_checker.validate(user_input)
     @remaining_guesses -= 1
   end
 
