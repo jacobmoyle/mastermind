@@ -21,7 +21,6 @@ class GuessValidator
   def validate(guess)
     player_code = convert_to_arr(guess)
 
-
     response = @response_template.new('')
 
     @unsolved_code.each_with_index do |char, curr_index|

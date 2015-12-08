@@ -28,41 +28,41 @@ describe GuessValidator do
     end
 
     it 'can accept uppercase or lowercase input' do
-      expect(feedback('a234')).to eq('o')
-      expect(feedback('A234')).to eq('o')
+      expect(feedback_for('a234')).to eq('o')
+      expect(feedback_for('A234')).to eq('o')
     end
 
     context 'when guess is completely correct' do
       it 'responds with true' do
-        expect(feedback('ABCD')).to eq('oooo')
+        expect(feedback_for('ABCD')).to eq('oooo')
       end
     end
 
     context 'when guess is incorrect' do
 
       it 'responds with false if completely incorrect' do
-        expect(feedback('1234')).to eq('')
+        expect(feedback_for('1234')).to eq('')
       end
 
       it 'provides o for any correct character in the correct spot' do
-        expect(feedback('A234')).to eq('o')
-        expect(feedback('1B34')).to eq('o')
-        expect(feedback('12C4')).to eq('o')
-        expect(feedback('123D')).to eq('o')
+        expect(feedback_for('A234')).to eq('o')
+        expect(feedback_for('1B34')).to eq('o')
+        expect(feedback_for('12C4')).to eq('o')
+        expect(feedback_for('123D')).to eq('o')
       end
 
       # No tests written to cover duplicate characters
       it 'provides x if a character is correct but in the incorrect spot' do
-        expect(feedback('1A34')).to eq('x')
-        expect(feedback('B234')).to eq('x')
-        expect(feedback('123C')).to eq('x')
-        expect(feedback('1D34')).to eq('x')
+        expect(feedback_for('1A34')).to eq('x')
+        expect(feedback_for('B234')).to eq('x')
+        expect(feedback_for('123C')).to eq('x')
+        expect(feedback_for('1D34')).to eq('x')
       end
     end
   end
 end
 
 # Helper Methods
-def feedback(guess)
+def feedback_for(guess)
   subject.validate(guess).feedback
 end
