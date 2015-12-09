@@ -21,7 +21,6 @@ describe GuessValidator do
   end
 
   describe '#validate' do
-
     {
       'a234'     => 'o',
       'A234'     => 'o',
@@ -35,8 +34,9 @@ describe GuessValidator do
       'B234'     => 'x',
       '123C'     => 'x',
       '1D34'     => 'x',
-      '12345667' => nil,
-      '1'        => nil
+      '12345667' => 'Guess too long',
+      '1'        => 'Guess too short',
+
     }.each_pair do |code, expected_feedback|
       it "reponds to #{code} with #{expected_feedback}" do
         expect(feedback_for(code)).to eq(expected_feedback)

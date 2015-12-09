@@ -33,7 +33,8 @@ class GuessValidator
       end
     end
 
-    response = nil if player_code.length != @unsolved_code.length
+    response = 'Guess too long' if player_code.length > @unsolved_code.length
+    response = 'Guess too short' if player_code.length < @unsolved_code.length
 
     response
   end
