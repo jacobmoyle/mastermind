@@ -22,23 +22,28 @@ class GuessValidator
   end
 
   def validate(player_guess)
-    player_code = format_code(player_guess)
-    response = ''
+    formatted_guess = format_code(player_guess)
 
-    @unsolved_code.each_with_index do |char, curr_index|
-      if char == player_code[curr_index]
-        response.concat('o')
-      elsif player_code.include?(char)
-        response.concat('x')
-      end
+    if formatted_guess.length != @unsolved_code.length
+      return 'Guess length is incorrect, code is 4 characters'
+    else
+      return guess_feedback(@unsolved_code, formatted_guess)
     end
-
-    response = 'Guess length is incorrect, code is 4 characters' if player_code.length != @unsolved_code.length
-
-    response
   end
 
   private
+
+  def guess_feedback(objective, attempt)
+    response = ''
+    objective.each_with_index do |char, curr_index|
+      if char == attempt[curr_index]
+        response.concat('o')
+      elsif attempt.include?(char)
+        response.concat('x')
+      end
+    end
+    response
+  end
 
   def format_code(guess)
     guess.upcase.split('')
