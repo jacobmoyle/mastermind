@@ -11,7 +11,6 @@ describe GuessValidator do
   end
 
   describe '#set_code' do
-
     it 'changes the unsolved code' do
       validator = GuessValidator.new(new_code)
       previous_code = validator.unsolved_code
@@ -22,43 +21,51 @@ describe GuessValidator do
   end
 
   describe '#validate' do
-
-    it 'responds to the method with param' do
-      expect(subject).to respond_to(:validate).with(1).argument
-    end
-
-    it 'can accept uppercase or lowercase input' do
-      expect(subject.validate('a234')).to eq('o')
-      expect(subject.validate('A234')).to eq('o')
-    end
-
-    context 'when guess is completely correct' do
-      it 'responds with true' do
-        expect(subject.validate('ABCD')).to eq('oooo')
+    context 'Code to be solved is "ABCD"' do
+      abcd = GuessValidator.new("ABCD")
+      {
+        '1234'     => '',
+        '12345667' => 'Guess length is incorrect, code is 4 characters',
+        '1'        => 'Guess length is incorrect, code is 4 characters',
+        ''         => 'Guess length is incorrect, code is 4 characters',
+        'ABCD'     => 'oooo',
+        'Abc4'     => 'ooo',
+        'a23d'     => 'oo',
+        'A234'     => 'o',
+        '1B34'     => 'o',
+        '12C4'     => 'o',
+        '123D'     => 'o',
+        'a2aa'     => 'o',
+        'dabc'     => 'xxxx',
+        '1abc'     => 'xxx',
+        'da23'     => 'xx',
+        '1A34'     => 'x',
+        'B234'     => 'x',
+        '123C'     => 'x',
+        '1D34'     => 'x',
+        '1aaa'     => 'x',
+      }.each_pair do |guess, expected_feedback|
+        it "reponds to #{guess} with #{expected_feedback}" do
+          expect(feedback_for(abcd, guess)).to eq(expected_feedback)
+        end
       end
     end
 
-    context 'when guess is incorrect' do
-
-      it 'responds with false if completely incorrect' do
-        expect(subject.validate('1234')).to eq('')
-      end
-
-      it 'provides o for any correct character in the correct spot' do
-        expect(subject.validate('A234')).to eq('o')
-        expect(subject.validate('1B34')).to eq('o')
-        expect(subject.validate('12C4')).to eq('o')
-        expect(subject.validate('123D')).to eq('o')
-      end
-
-      # No tests written to cover duplicate characters
-      it 'provides x if a character is correct but in the incorrect spot' do
-        expect(subject.validate('1A34')).to eq('x')
-        expect(subject.validate('B234')).to eq('x')
-        expect(subject.validate('123C')).to eq('x')
-        expect(subject.validate('1D34')).to eq('x')
+    context 'Code to be solved is "AABB"' do
+      aabb = GuessValidator.new("AABB")
+      {
+        'baaa' => 'xox',
+      }.each_pair do |guess, expected_feedback|
+        it "reponds to #{guess} with #{expected_feedback}" do
+          expect(feedback_for(aabb, guess)).to eq(expected_feedback)
+        end
       end
     end
   end
 
+end
+
+# Helper Methods
+def feedback_for(validator, guess)
+  validator.validate(guess)
 end
