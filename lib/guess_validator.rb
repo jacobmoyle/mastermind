@@ -44,6 +44,7 @@ class GuessValidator
     @response = @response_template.new('', nil)
   end
 
+  # Should validator error check? Is this even necissary this deep? Should the view or game do this?
   def error_check(code)
     if code.length > @unsolved_code.length
       @response.error = 'Input is too long.'
