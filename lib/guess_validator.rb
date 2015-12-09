@@ -13,16 +13,18 @@ class GuessValidator
     formatted_guess = format_code(player_guess)
 
     if formatted_guess.length != @unsolved_code.length
-      return 'Guess length is incorrect, code is 4 characters'
+      'Guess length is incorrect, code is 4 characters'
     else
-      return guess_feedback(@unsolved_code, formatted_guess)
+      guess_feedback(@unsolved_code, formatted_guess)
     end
+
   end
 
   private
 
   def guess_feedback(objective, attempt)
     response = ''
+
     objective.each_with_index do |char, curr_index|
       if char == attempt[curr_index]
         response.concat('o')
@@ -30,6 +32,7 @@ class GuessValidator
         response.concat('x')
       end
     end
+
     response
   end
 
