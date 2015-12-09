@@ -1,15 +1,10 @@
 class GuessValidator
-  attr_reader :unsolved_code
-
-  def initialize(new_code)
-    set_code(new_code)
-  end
-
   def set_code(code)
     @unsolved_code = format_code(code)
   end
 
-  def validate(player_guess)
+  def validate(unsolved_code, player_guess)
+    set_code(unsolved_code)
     formatted_guess = format_code(player_guess)
 
     if formatted_guess.length != @unsolved_code.length
