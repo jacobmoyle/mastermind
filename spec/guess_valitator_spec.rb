@@ -23,20 +23,20 @@ describe GuessValidator do
   describe '#validate' do
 
     {
-      'a234' => 'o',
-      'A234' => 'o',
-      'ABCD' => 'oooo',
-      '1234' => '',
-      'A234' => 'o',
-      '1B34' => 'o',
-      '12C4' => 'o',
-      '123D' => 'o',
-      '1A34' => 'x',
-      'B234' => 'x',
-      '123C' => 'x',
-      '1D34' => 'x',
+      'a234'     => 'o',
+      'A234'     => 'o',
+      'ABCD'     => 'oooo',
+      '1234'     => '',
+      'A234'     => 'o',
+      '1B34'     => 'o',
+      '12C4'     => 'o',
+      '123D'     => 'o',
+      '1A34'     => 'x',
+      'B234'     => 'x',
+      '123C'     => 'x',
+      '1D34'     => 'x',
       '12345667' => nil,
-      '1' => nil
+      '1'        => nil
     }.each_pair do |code, expected_feedback|
       it "reponds to #{code} with #{expected_feedback}" do
         expect(feedback_for(code)).to eq(expected_feedback)
@@ -49,9 +49,5 @@ end
 
 # Helper Methods
 def feedback_for(guess)
-  subject.validate(guess).feedback
-end
-
-def error_for(guess)
-  subject.validate(guess).error
+  subject.validate(guess)
 end
