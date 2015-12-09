@@ -33,8 +33,7 @@ class GuessValidator
       end
     end
 
-    response = 'Guess too long' if player_code.length > @unsolved_code.length
-    response = 'Guess too short' if player_code.length < @unsolved_code.length
+    response = 'Guess length is incorrect, code is 4 characters' if player_code.length != @unsolved_code.length
 
     response
   end

@@ -34,9 +34,9 @@ describe GuessValidator do
       'B234'     => 'x',
       '123C'     => 'x',
       '1D34'     => 'x',
-      '12345667' => 'Guess too long',
-      '1'        => 'Guess too short',
-
+      '12345667' => 'Guess length is incorrect, code is 4 characters',
+      '1'        => 'Guess length is incorrect, code is 4 characters',
+      ''         => 'Guess length is incorrect, code is 4 characters'
     }.each_pair do |code, expected_feedback|
       it "reponds to #{code} with #{expected_feedback}" do
         expect(feedback_for(code)).to eq(expected_feedback)
