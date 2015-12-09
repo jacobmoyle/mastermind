@@ -21,33 +21,51 @@ describe GuessValidator do
   end
 
   describe '#validate' do
-    {
-      'a234'     => 'o',
-      'A234'     => 'o',
-      'ABCD'     => 'oooo',
-      '1234'     => '',
-      'A234'     => 'o',
-      '1B34'     => 'o',
-      '12C4'     => 'o',
-      '123D'     => 'o',
-      '1A34'     => 'x',
-      'B234'     => 'x',
-      '123C'     => 'x',
-      '1D34'     => 'x',
-      '12345667' => 'Guess length is incorrect, code is 4 characters',
-      '1'        => 'Guess length is incorrect, code is 4 characters',
-      ''         => 'Guess length is incorrect, code is 4 characters'
-    }.each_pair do |code, expected_feedback|
-      it "reponds to #{code} with #{expected_feedback}" do
-        expect(feedback_for(code)).to eq(expected_feedback)
+    context 'Code to be solved is "ABCD"' do
+      abcd = GuessValidator.new("ABCD")
+      {
+        '1234'     => '',
+        '12345667' => 'Guess length is incorrect, code is 4 characters',
+        '1'        => 'Guess length is incorrect, code is 4 characters',
+        ''         => 'Guess length is incorrect, code is 4 characters',
+        'ABCD'     => 'oooo',
+        'Abc4'     => 'ooo',
+        'a23d'     => 'oo',
+        'A234'     => 'o',
+        '1B34'     => 'o',
+        '12C4'     => 'o',
+        '123D'     => 'o',
+        'a2aa'     => 'o',
+        'dabc'     => 'xxxx',
+        '1abc'     => 'xxx',
+        'da23'     => 'xx',
+        '1A34'     => 'x',
+        'B234'     => 'x',
+        '123C'     => 'x',
+        '1D34'     => 'x',
+        '1aaa'     => 'x',
+      }.each_pair do |guess, expected_feedback|
+        it "reponds to #{guess} with #{expected_feedback}" do
+          expect(feedback_for(abcd, guess)).to eq(expected_feedback)
+        end
       end
     end
 
+    context 'Code to be solved is "AABB"' do
+      aabb = GuessValidator.new("AABB")
+      {
+        'baaa' => 'xox',
+      }.each_pair do |guess, expected_feedback|
+        it "reponds to #{guess} with #{expected_feedback}" do
+          expect(feedback_for(aabb, guess)).to eq(expected_feedback)
+        end
+      end
+    end
   end
 
 end
 
 # Helper Methods
-def feedback_for(guess)
-  subject.validate(guess)
+def feedback_for(validator, guess)
+  validator.validate(guess)
 end
