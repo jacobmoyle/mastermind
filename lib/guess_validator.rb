@@ -1,4 +1,7 @@
 class GuessValidator
+  def initialize
+    @holder = ' '
+  end
 
   def validate(unsolved_code, player_code)
     set_code(unsolved_code, player_code)
@@ -21,11 +24,23 @@ class GuessValidator
   def return_hint(objective, attempt)
     response = ''
 
-    objective.each_with_index do |char, curr_index|
-      if char == attempt[curr_index]
+    attempt.each_with_index do |char, curr_index|
+      if char == objective[curr_index] && char != @holder
         response.concat('o')
-      elsif attempt.include?(char)
-        response.concat('x')
+        objective[curr_index] = @holder
+        attempt[curr_index] = @holder
+      end
+    end
+
+    attempt.each_with_index do |char, curr_index|
+      p char != @holder
+      if char != @holder
+        location = objective.index(char)
+        if location != nil
+          response.concat('x')
+          objective[location] = @holder
+          attempt[curr_index] = @holder
+        end
       end
     end
 

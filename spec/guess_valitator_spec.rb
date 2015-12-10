@@ -35,7 +35,7 @@ describe GuessValidator do
     context 'Code to be solved is "AABB"' do
       code = "AABB"
       {
-        'baaa' => 'xox',
+        'baaa' => 'oxx',
       }.each_pair do |guess, expected_feedback|
         it "reponds to #{guess} with #{expected_feedback}" do
           expect(feedback_for(code, guess)).to eq(expected_feedback)
