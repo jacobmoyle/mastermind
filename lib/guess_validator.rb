@@ -1,50 +1,54 @@
 class GuessValidator
+
   def initialize
     @holder = ' '
   end
 
   def validate(unsolved_code, player_code)
-    set_code(unsolved_code, player_code)
+    set_instance_variables(unsolved_code, player_code)
 
     if @formatted_guess.length != @unsolved_code.length
       'Guess length is incorrect, code is 4 characters'
     else
-      return_hint(@unsolved_code, @formatted_guess)
+      return_hint
     end
-
   end
 
   private
 
-  def set_code(unsolved_code, player_code)
-    @unsolved_code    = format_code(unsolved_code)
-    @formatted_guess  = format_code(player_code)
-  end
-
-  def return_hint(objective, attempt)
+  def return_hint
     response = ''
 
-    attempt.each_with_index do |char, curr_index|
-      if char == objective[curr_index] && char != @holder
+    # Can these two blocks be combined?
+    @formatted_guess.each_with_index do |char, curr_index|
+      if char == @unsolved_code[curr_index] && char != @holder
         response.concat('o')
-        objective[curr_index] = @holder
-        attempt[curr_index] = @holder
+        overwrite(@unsolved_code, curr_index)
+        overwrite(@formatted_guess, curr_index)
       end
     end
 
-    attempt.each_with_index do |char, curr_index|
-      p char != @holder
+    @formatted_guess.each_with_index do |char, curr_index|
       if char != @holder
-        location = objective.index(char)
+        location = @unsolved_code.index(char)
         if location != nil
           response.concat('x')
-          objective[location] = @holder
-          attempt[curr_index] = @holder
+          overwrite(@unsolved_code, location)
+          overwrite(@formatted_guess, curr_index)
         end
       end
     end
 
     response
+  end
+
+  def set_instance_variables(unsolved_code, player_code)
+    @unsolved_code    = format_code(unsolved_code)
+    @formatted_guess  = format_code(player_code)
+  end
+
+  def overwrite(array, index)
+    array[index] = @holder
   end
 
   def format_code(guess)
