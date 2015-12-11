@@ -4,45 +4,44 @@ class Game
     @guess_checker     = params.fetch(:code_validator)
     @code_generator    = params.fetch(:code_generator)
     @remaining_guesses = params.fetch(:attempts, 10)
+    @player            = params.fetch(:guess_generator)
+    @last_guess        = nil
   end
 
   def start
-    # Create a 'clean slate' method? Boots up and sets a new hidden code?
     @messages.greet
     @hidden_code = @code_generator.generate
 
     until game_over
-      give_player(
-        validators_response_for(
-          players_new_guess))
+      get_guess
+      update_validator_response
+      output_validator_response
 
       p "target: #{@hidden_code}"
-      # How will I handle the situation in which a player solves the code on the last guess?
+
       complete_turn
     end
 
-    # How will I handle the situation in which a player never guesses correctly?
     @messages.goodbye
   end
 
   private
 
-  def give_player(message)
-    @messages.feedback(message)
+  def output_validator_response
+    @messages.feedback(@validator_response)
   end
 
-  def validators_response_for(player_guess)
-    @validator_response = @guess_checker.validate(@hidden_code, player_guess)
+  def update_validator_response
+    @validator_response = @guess_checker.validate(@hidden_code, @last_guess)
   end
 
-  def players_new_guess
+  def get_guess
     @messages.prompt_guess(@remaining_guesses)
-    user_input
+    update_last_guess
   end
 
-  def user_input
-    @messages.prompt_input
-    gets.chomp
+  def update_last_guess
+    @last_guess = @player.new_guess
   end
 
   def complete_turn
@@ -50,7 +49,6 @@ class Game
   end
 
   def game_over
-    # Should game know what the final feedback should be? Should it be hardcoded?
     @validator_response == 'oooo' || @remaining_guesses == 0
   end
 end
