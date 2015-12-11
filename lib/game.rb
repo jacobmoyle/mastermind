@@ -4,8 +4,8 @@ class Game
     @guess_checker     = params.fetch(:code_validator)
     @code_generator    = params.fetch(:code_generator)
     @remaining_guesses = params.fetch(:attempts, 10)
-    @last_guess        = nil
     @player            = params.fetch(:guess_generator)
+    @last_guess        = nil
   end
 
   def start
