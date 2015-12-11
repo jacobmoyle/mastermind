@@ -18,6 +18,7 @@ class Game
       output_validator_response
 
       p "target: #{@hidden_code}"
+
       complete_turn
     end
 
