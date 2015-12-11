@@ -27,6 +27,7 @@ class Messages
     puts ''
     puts "You have #{remaining_guesses} guesses left."
     puts 'What is your guess?'
+    prompt_input
   end
 
   def prompt_input
