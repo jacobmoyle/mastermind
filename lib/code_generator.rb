@@ -4,6 +4,7 @@ class CodeGenerator
     @code_length = 4
   end
 
+  # Naming is smurfy
   def generate
     new_code = ""
     @code_length.times do
@@ -11,6 +12,8 @@ class CodeGenerator
     end
     return new_code
   end
+
+  private
 
   def random_character
     @character_pool.sample
