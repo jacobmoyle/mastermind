@@ -8,7 +8,7 @@ class GuessValidator
     set_instance_variables(unsolved_code, player_code)
 
     if @formatted_guess.length != @unsolved_code.length
-      'Guess length is incorrect, code is 4 characters'
+      'Code length is incorrect, code is 4 characters'
     else
       return_hint
     end
