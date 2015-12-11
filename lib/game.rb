@@ -13,12 +13,12 @@ class Game
 
     until game_over
       # Can the following two lines be combined?
-      new_player_guess
-      get_guess_feedback
+      give_player(
+        validator_response(
+          new_player_guess))
 
       p "target: #{@hidden_code}"
       # How will I handle the situation in which a player solves the code on the last guess?
-      provide_feedback
       complete_turn
     end
 
@@ -28,17 +28,17 @@ class Game
 
   private
 
-  def provide_feedback
-    @messages.feedback(@guess_feedback)
+  def give_player(message)
+    @messages.feedback(message)
   end
 
   def new_player_guess
     @messages.prompt_guess(@remaining_guesses)
-    @player_code = user_input
+    user_input
   end
 
-  def get_guess_feedback
-    @guess_feedback = @guess_checker.validate(@hidden_code, @player_code)
+  def validator_response(player_guess)
+    @validator_response = @guess_checker.validate(@hidden_code, player_guess)
   end
 
   def user_input
@@ -52,6 +52,6 @@ class Game
 
   def game_over
     # Should game know what the final feedback should be? Should it be hardcoded?
-    @guess_feedback == 'oooo' || @remaining_guesses == 0
+    @validator_response == 'oooo' || @remaining_guesses == 0
   end
 end
