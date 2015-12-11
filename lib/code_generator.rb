@@ -4,7 +4,6 @@ class CodeGenerator
     @code_length = 4
   end
 
-  # Naming is smurfy
   def generate
     new_code = ""
     @code_length.times do

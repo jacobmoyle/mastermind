@@ -19,7 +19,6 @@ class GuessValidator
   def return_hint
     response = ''
 
-    # Can these two blocks be combined?
     @formatted_guess.each_with_index do |char, curr_index|
       if char == @unsolved_code[curr_index] && char != @holder
         response.concat('o')
