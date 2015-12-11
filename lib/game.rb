@@ -12,10 +12,9 @@ class Game
     @hidden_code = @code_generator.generate
 
     until game_over
-      # Can the following two lines be combined?
       give_player(
-        validator_response(
-          new_player_guess))
+        validators_response_for(
+          players_new_guess))
 
       p "target: #{@hidden_code}"
       # How will I handle the situation in which a player solves the code on the last guess?
@@ -32,13 +31,13 @@ class Game
     @messages.feedback(message)
   end
 
-  def new_player_guess
-    @messages.prompt_guess(@remaining_guesses)
-    user_input
+  def validators_response_for(player_guess)
+    @validator_response = @guess_checker.validate(@hidden_code, player_guess)
   end
 
-  def validator_response(player_guess)
-    @validator_response = @guess_checker.validate(@hidden_code, player_guess)
+  def players_new_guess
+    @messages.prompt_guess(@remaining_guesses)
+    user_input
   end
 
   def user_input
