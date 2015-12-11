@@ -7,7 +7,6 @@ class Game
   end
 
   def start
-    # Create a 'clean slate' method? Boots up and sets a new hidden code?
     @messages.greet
     @hidden_code = @code_generator.generate
 
@@ -17,11 +16,9 @@ class Game
           players_new_guess))
 
       p "target: #{@hidden_code}"
-      # How will I handle the situation in which a player solves the code on the last guess?
       complete_turn
     end
 
-    # How will I handle the situation in which a player never guesses correctly?
     @messages.goodbye
   end
 
@@ -50,7 +47,6 @@ class Game
   end
 
   def game_over
-    # Should game know what the final feedback should be? Should it be hardcoded?
     @validator_response == 'oooo' || @remaining_guesses == 0
   end
 end
