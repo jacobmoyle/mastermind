@@ -2,7 +2,7 @@ require_relative '../lib/guess_validator'
 
 describe GuessValidator do
   describe '#validate' do
-    context 'Code to be solved is "ABCD"' do
+    context 'No repeating digits' do
       code = "ABCD"
       {
         '1234'     => '',
@@ -32,7 +32,7 @@ describe GuessValidator do
       end
     end
 
-    context 'Code to be solved is "AABB"' do
+    context 'Repeating digits"' do
       code = "AABB"
       {
         'baaa' => 'oxx',
