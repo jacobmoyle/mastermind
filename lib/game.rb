@@ -14,7 +14,7 @@ class Game
 
     until game_over
       get_guess
-      get_validator_response
+      update_validator_response
       output_validator_response
 
       p "target: #{@hidden_code}"
@@ -30,7 +30,7 @@ class Game
     @messages.feedback(@validator_response)
   end
 
-  def get_validator_response
+  def update_validator_response
     @validator_response = @guess_checker.validate(@hidden_code, @last_guess)
   end
 
