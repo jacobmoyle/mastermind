@@ -49,6 +49,6 @@ class Game
   end
 
   def game_over
-    @validator_response == 'oooo' || @remaining_guesses == 0
+    @validator_response == @guess_checker.winning_response || @remaining_guesses == 0
   end
 end

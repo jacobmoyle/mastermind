@@ -6,9 +6,9 @@ describe GuessValidator do
       code = "ABCD"
       {
         '1234'     => '',
-        '12345667' => 'Guess length is incorrect, code is 4 characters',
-        '1'        => 'Guess length is incorrect, code is 4 characters',
-        ''         => 'Guess length is incorrect, code is 4 characters',
+        '12345667' => 'Code length is incorrect, code is 4 characters',
+        '1'        => 'Code length is incorrect, code is 4 characters',
+        ''         => 'Code length is incorrect, code is 4 characters',
         'ABCD'     => 'oooo',
         'Abc4'     => 'ooo',
         'a23d'     => 'oo',
@@ -35,7 +35,7 @@ describe GuessValidator do
     context 'Repeating digits"' do
       code = "AABB"
       {
-        'baaa' => 'oxx',
+        'baaa' => 'xox',
       }.each_pair do |guess, expected_feedback|
         it "reponds to #{guess} with #{expected_feedback}" do
           expect(feedback_for(code, guess)).to eq(expected_feedback)
