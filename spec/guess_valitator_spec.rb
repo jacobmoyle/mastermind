@@ -1,6 +1,9 @@
 require_relative '../lib/guess_validator'
 
 describe GuessValidator do
+  it { should respond_to(:winning_response) }
+  it { should respond_to(:validate) }
+
   describe '#validate' do
 
     it 'is not case sensitive' do
