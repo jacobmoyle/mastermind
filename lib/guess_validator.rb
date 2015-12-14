@@ -1,4 +1,8 @@
 class GuessValidator
+  def winning_response
+    'oooo'
+  end
+
   def validate(unsolved_code, player_code)
     set_defaults(unsolved_code, player_code)
     return @error if @formatted_guess.length != @unsolved_code.length
