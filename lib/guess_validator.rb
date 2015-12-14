@@ -1,32 +1,33 @@
 class GuessValidator
-
-  def initialize
-    @place_holder = ' '
-    @exact_match_char = 'o'
-    @contains_match_char = 'x'
-    @response = ''
-    @error = 'Code length is incorrect, code is 4 characters'
-  end
-
   def validate(unsolved_code, player_code)
-    set_instance_variables(unsolved_code, player_code)
-    @response = ''
-
+    set_defaults(unsolved_code, player_code)
     return @error if @formatted_guess.length != @unsolved_code.length
-
     create_feedback
     @response
   end
 
   private
 
+  def set_defaults(unsolved_code, player_code)
+    @unsolved_code        = format_code(unsolved_code)
+    @formatted_guess      = format_code(player_code)
+    @place_holder         = ' '
+    @exact_match_char     = 'o'
+    @contains_match_char  = 'x'
+    @error                = 'Code length is incorrect, code is 4 characters'
+    @response             = ''
+  end
+
   def create_feedback
-    @formatted_guess.each_with_index do |guess, guess_index|
-      exact_feedback(guess_index) if perfect_match?(guess, guess_index)
+    @formatted_guess.each_with_index do |character, char_index|
+      if perfect_match?(character, char_index)
+        provide_exact_feedback(char_index)
+      end
 
-      target_index = @unsolved_code.index(guess)
-
-      relative_feedback(guess_index, target_index) if relative_match?(guess, target_index)
+      target_index = @unsolved_code.index(character)
+      if relative_match?(character, target_index)
+        provide_relative_feedback(char_index, target_index)
+      end
     end
   end
 
@@ -34,8 +35,8 @@ class GuessValidator
     unused_character?(guess_char) && target != nil
   end
 
-  def relative_feedback(guess_index, target_index)
-    add_character_feedback(@contains_match_char)
+  def provide_relative_feedback(guess_index, target_index)
+    concat_to_response(@contains_match_char)
 
     mark_as_used(@unsolved_code, target_index)
     mark_as_used(@formatted_guess, guess_index)
@@ -45,30 +46,19 @@ class GuessValidator
     guess_char == @unsolved_code[guess_index] && unused_character?(guess_char)
   end
 
-  def exact_feedback(index)
-    add_character_feedback(@exact_match_char)
+  def provide_exact_feedback(index)
+    concat_to_response(@exact_match_char)
 
     mark_as_used(@unsolved_code, index)
     mark_as_used(@formatted_guess, index)
   end
 
-  def
-
-  def reset_response
-    @response = ''
-  end
-
-  def add_character_feedback(feedback)
+  def concat_to_response(feedback)
     @response.concat(feedback)
   end
 
   def unused_character?(char)
     char != @place_holder
-  end
-
-  def set_instance_variables(unsolved_code, player_code)
-    @unsolved_code    = format_code(unsolved_code)
-    @formatted_guess  = format_code(player_code)
   end
 
   def mark_as_used(array, index)
