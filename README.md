@@ -8,7 +8,7 @@ bundle install
 ```
 Start the game with:
 ```
-ruby mastermind
+ruby runner.rb
 ```
 
 ## Running Tests
