@@ -1,54 +1,62 @@
 class Game
   def initialize(params)
-    @messages          = params.fetch(:terminal_messages)
-    @guess_checker     = params.fetch(:code_validator)
-    @code_generator    = params.fetch(:code_generator)
-    @remaining_guesses = params.fetch(:attempts, 10)
-    @player            = params.fetch(:guess_generator)
-    @last_guess        = nil
+#     @messages          = params.fetch(:terminal_messages)
+#     @guess_checker     = params.fetch(:code_validator)
+#     @code_generator    = params.fetch(:code_generator)
+#     @remaining_guesses = params.fetch(:attempts, 10)
+    @player            = params.fetch(:input)
+#     @last_guess        = nil
   end
 
-  def start
-    @messages.greet
-    @hidden_code = @code_generator.generate
-
-    until game_over
-      get_guess
-      update_validator_response
-      output_validator_response
-
-      p "target: #{@hidden_code}"
-
-      complete_turn
+  def player_guess
+    input = ''
+    until input.length == 4
+      input = @player.guess
     end
-
-    @messages.goodbye
+    input
   end
 
-  private
+#   def start
+#     @messages.greet
+#     @hidden_code = @code_generator.generate
 
-  def output_validator_response
-    @messages.feedback(@validator_response)
-  end
+#     until game_over
+#       get_guess
+#       update_validator_response
+#       output_validator_response
 
-  def update_validator_response
-    @validator_response = @guess_checker.validate(@hidden_code, @last_guess)
-  end
+#       p "target: #{@hidden_code}"
 
-  def get_guess
-    @messages.prompt_guess(@remaining_guesses)
-    update_last_guess
-  end
+#       complete_turn
+#     end
 
-  def update_last_guess
-    @last_guess = @player.new_guess
-  end
+#     @messages.goodbye
+#   end
 
-  def complete_turn
-    @remaining_guesses -= 1
-  end
+#   private
 
-  def game_over
-    @validator_response == @guess_checker.winning_response || @remaining_guesses == 0
-  end
+#   def output_validator_response
+#     @messages.feedback(@validator_response)
+#   end
+
+#   def update_validator_response
+#     @validator_response = @guess_checker.validate(@hidden_code, @last_guess)
+#   end
+
+#   def get_guess
+#     @messages.prompt_guess(@remaining_guesses)
+#     update_last_guess
+#   end
+
+#   def update_last_guess
+#     @last_guess = @player.new_guess
+#   end
+
+#   def complete_turn
+#     @remaining_guesses -= 1
+#   end
+
+#   def game_over
+#     @validator_response == @guess_checker.winning_response || @remaining_guesses == 0
+#   end
 end
