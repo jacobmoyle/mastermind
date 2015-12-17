@@ -1,119 +1,122 @@
 require_relative '../lib/guess_validator'
 
 describe GuessValidator do
-  # it { should respond_to(:correct?) }
-  # it { should respond_to(:hint) }
-  # it { should respond_to(:validate) }
 
   describe '#correct?' do
+
     it 'returns true if the guess and target match' do
       guess = GuessValidator.new(hidden_code: 'aaaa', guess: 'aaaa')
-
       expect(guess.correct?).to eq(true)
     end
     it 'returns false if the guess and target don\'t match' do
       guess = GuessValidator.new(hidden_code: 'aaaa', guess: 'bbbb')
-
       expect(guess.correct?).to eq(false)
     end
   end
 
   describe '#hint' do
 
-#     it 'is not case sensitive' do
-#       expect(subject.validate('ABCD', 'a2aF')).to eq('o')
-#     end
+    it 'is not case sensitive' do
+      guess = GuessValidator.new(hidden_code: 'ABCD', guess: 'a2aF')
+      expect(guess.hint).to eq('o')
+    end
+    it 'returns an empty string if the guess is completely wrong' do
+      guess = GuessValidator.new(hidden_code: "ABCD", guess: '1234')
+      expect(guess.hint).to eq('')
+    end
 
-#     it 'returns an empty string if the guess is completely wrong' do
-#       code = "ABCD"
+    context 'when provided a correct character, incorrectly placed' do
+      code = 'ABCD'
 
-#       expect(subject.validate(code, '1234')).to eq('')
-#     end
+      it 'returns a double match if two characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'da23')
+        expect(guess.hint).to eq('xx')
+      end
+      it 'returns a triple match if three characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: '1abc')
+        expect(guess.hint).to eq('xxx')
+      end
+      it 'returns a quadruple match if four characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'dabc')
+        expect(guess.hint).to eq('xxxx')
+      end
+    end
 
-#     context 'when input is invalid' do
-#       code = "ABCD"
+    context 'when provided a correct character, but incorrect placement' do
+      code = 'ABCD'
 
-#       it 'returns an error if the guess is too long' do
-#         expect(subject.validate(code, '12345667').length).to be > 0
-#       end
-#       it 'returns an error if the guess is too short' do
-#         expect(subject.validate(code, '1').length).to be > 0
-#       end
-#       it 'returns an error if the guess is an empty string' do
-#         expect(subject.validate(code, '').length).to be > 0
-#       end
-#     end
+      it 'returns a single match if the guessed character is offset' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'B234')
+        expect(guess.hint).to eq('x')
 
-#     context 'when provided a correct character, but incorrect placement' do
-#       code = 'ABCD'
+        guess = GuessValidator.new(hidden_code: code, guess: '123C')
+        expect(guess.hint).to eq('x')
 
-#       it 'returns a double match if two characters are correct' do
-#         expect(subject.validate(code, 'da23')).to eq('xx')
-#       end
-#       it 'returns a triple match if three characters are correct' do
-#         expect(subject.validate(code, '1abc')).to eq('xxx')
-#       end
-#       it 'returns a quadruple match if four characters are correct' do
-#         expect(subject.validate(code, 'dabc')).to eq('xxxx')
-#       end
-#     end
+        guess = GuessValidator.new(hidden_code: code, guess: '1D34')
+        expect(guess.hint).to eq('x')
 
-#     context 'when provided a correct character, but incorrect placement' do
-#       code = 'ABCD'
+        guess = GuessValidator.new(hidden_code: code, guess: '1A34')
+        expect(guess.hint).to eq('x')
 
-#       it 'returns a single match if the guessed character is offset' do
-#         expect(subject.validate(code, 'B234')).to eq('x')
-#         expect(subject.validate(code, '123C')).to eq('x')
-#         expect(subject.validate(code, '1D34')).to eq('x')
-#         expect(subject.validate(code, '1A34')).to eq('x')
-#         expect(subject.validate(code, '1D34')).to eq('x')
-#       end
-#       it 'returns a single match when the guess contains multiple duplicates of a single digit' do
-#         expect(subject.validate(code, '1aaa')).to eq('x')
-#       end
-#     end
+        guess = GuessValidator.new(hidden_code: code, guess: '1D34')
+        expect(guess.hint).to eq('x')
+      end
+      it 'returns a single match when guess contains duplicates of a single digit' do
+        guess = GuessValidator.new(hidden_code: code, guess: '1aaa')
+        expect(guess.hint).to eq('x')
+      end
+    end
 
-#     context 'when provided a correct character, in the correct placement' do
-#       code = 'ABCD'
+    context 'when provided a correct character, in the correct placement' do
+      code = 'ABCD'
 
-#       it 'returns a single match if only the first character is correct' do
-#         expect(subject.validate(code, 'A234')).to eq('o')
-#       end
-#       it 'returns a single match if only the second character is correct' do
-#         expect(subject.validate(code, '1B34')).to eq('o')
-#       end
-#       it 'returns a single match if only the third character is correct' do
-#         expect(subject.validate(code, '12C4')).to eq('o')
-#       end
-#       it 'returns a single match if only the fourth character is correct' do
-#         expect(subject.validate(code, '123D')).to eq('o')
-#       end
-#       it 'returns a single match if there are duplicate characters in the guess, and only a single instance in target' do
-#         expect(subject.validate(code, 'a2aa')).to eq('o')
-#       end
-#     end
+      it 'returns a single match if only the first character is correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'A234')
+        expect(guess.hint).to eq('o')
+      end
+      it 'returns a single match if only the second character is correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: '1B34')
+        expect(guess.hint).to eq('o')
+      end
+      it 'returns a single match if only the third character is correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: '12C4')
+        expect(guess.hint).to eq('o')
+      end
+      it 'returns a single match if only the fourth character is correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: '123D')
+        expect(guess.hint).to eq('o')
+      end
+      it 'returns a single match if there are duplicate characters in the guess, and only a single instance in target' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'a2aa')
+        expect(guess.hint).to eq('o')
+      end
+    end
 
-#     context 'when provided with multiple correct characters, in the correct placement' do
-#       code = 'ABCD'
+    context 'when provided with multiple correct characters, in the correct placement' do
+      code = 'ABCD'
 
-#       it 'returns a double match if two characters are correct' do
-#         expect(subject.validate(code, 'a23d')).to eq('oo')
-#       end
-#       it 'returns a triple match if three characters are correct' do
-#         expect(subject.validate(code, 'Abc4')).to eq('ooo')
-#       end
-#       it 'returns a quadruple match if four characters are correct' do
-#         expect(subject.validate(code, 'ABCD')).to eq('oooo')
-#       end
-#     end
+      it 'returns a double match if two characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'a23d')
+        expect(guess.hint).to eq('oo')
+      end
+      it 'returns a triple match if three characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'Abc4')
+        expect(guess.hint).to eq('ooo')
+      end
+      it 'returns a quadruple match if four characters are correct' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'ABCD')
+        expect(guess.hint).to eq('oooo')
+      end
+    end
 
-#     context 'when the guessed code has duplicate characters' do
-#       code = "AABB"
+    context 'when the guessed code has duplicate characters' do
+      code = "AABB"
 
-#       it 'only counts the guessed characters once' do
-#         expect(subject.validate(code, 'baaa')).to eq('xox')
-#       end
-#     end
+      it 'only counts the guessed characters once' do
+        guess = GuessValidator.new(hidden_code: code, guess: 'baaa')
+        expect(guess.hint).to eq('xox')
+      end
+    end
 
   end
 end
