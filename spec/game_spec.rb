@@ -39,16 +39,19 @@ describe Game do
     it 'returns false is the player has remaining turns and guessed incorrectly' do
       turns = 5
       allow(guess).to receive(:correct?).and_return(false)
+
       expect(game.game_over?(guess, turns)).to eq(false)
     end
     it 'returns true if the player is out of turns' do
       turns = 0
       allow(guess).to receive(:correct?).and_return(false)
+
       expect(game.game_over?(guess, turns)).to eq(true)
     end
     it 'returns true if the player guesses correctly' do
       turns = 5
       allow(guess).to receive(:correct?).and_return(true)
+
       expect(game.game_over?(guess, turns)).to eq(true)
     end
   end
