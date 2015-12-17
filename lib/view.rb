@@ -1,5 +1,5 @@
 class View
-  def greet
+  def greeting
     puts '                 Welcome MasterMind                 '
     puts '                    INSTRUCTIONS                    '
     puts 'The CodeMaker will generate a random pattern        '

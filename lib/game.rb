@@ -3,11 +3,14 @@ class Game
     @validator  = params.fetch(:code_checker)
     @code_maker = params.fetch(:code_maker)
     @player     = params.fetch(:input)
+    @print      = params.fetch(:view)
   end
 
   def start
     turns = 10
     hidden_code = new_hidden_code
+
+    @print.greeting
 
     loop do
       guess = @validator.new(hidden_code, player_guess)
