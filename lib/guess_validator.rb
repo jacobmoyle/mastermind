@@ -1,12 +1,20 @@
 class GuessValidator
+  def initialize(params)
+    @code  = params[:hidden_code]
+    @guess = params[:guess]
+  end
   # def winning_response
   #   'oooo'
   # end
 
   def correct?
+    @code == @guess
   end
 
   def hint
+  end
+
+  def validate
   end
 
   # def validate(unsolved_code, player_code)

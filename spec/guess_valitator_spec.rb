@@ -1,11 +1,24 @@
 require_relative '../lib/guess_validator'
 
 describe GuessValidator do
-  it { should respond_to(:correct?) }
-  it { should respond_to(:hint) }
-#   it { should respond_to(:validate) }
+  # it { should respond_to(:correct?) }
+  # it { should respond_to(:hint) }
+  # it { should respond_to(:validate) }
 
-#   describe '#validate' do
+  describe '#correct?' do
+    it 'returns true if the guess and target match' do
+      guess = GuessValidator.new(hidden_code: 'aaaa', guess: 'aaaa')
+
+      expect(guess.correct?).to eq(true)
+    end
+    it 'returns false if the guess and target don\'t match' do
+      guess = GuessValidator.new(hidden_code: 'aaaa', guess: 'bbbb')
+
+      expect(guess.correct?).to eq(false)
+    end
+  end
+
+  describe '#hint' do
 
 #     it 'is not case sensitive' do
 #       expect(subject.validate('ABCD', 'a2aF')).to eq('o')
@@ -102,5 +115,5 @@ describe GuessValidator do
 #       end
 #     end
 
-#   end
+  end
 end
