@@ -13,8 +13,6 @@ class Game
     @output.greeting
 
     loop do
-      puts "Answer: #{code}"
-
       @output.guess_prompt
       guess = @validator.new(hidden_code: code, guess: player_guess)
       @output.round_feedback(turns, hint_for(guess))
