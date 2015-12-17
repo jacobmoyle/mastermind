@@ -10,7 +10,7 @@ class Game
     hidden_code = new_hidden_code
 
     loop do
-      guess = validator.new(hidden_code, player_guess)
+      guess = @validator.new(hidden_code, player_guess)
       hint_for(guess)
       game_over?(guess, turns)
       turns -= 1

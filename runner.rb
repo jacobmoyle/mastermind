@@ -6,7 +6,7 @@ require_relative 'lib/player'
 
 Game.new(
   :terminal_messages => Messages.new,
-  :code_validator    => GuessValidator.new,
-  :code_generator    => CodeGenerator.new,
-  :guess_generator   => Player.new
+  :code_checker    => GuessValidator,
+  :code_maker    => CodeGenerator.new,
+  :input   => Player.new
   ).start
