@@ -3,21 +3,25 @@ class Game
     @validator  = params.fetch(:code_checker)
     @code_maker = params.fetch(:code_maker)
     @player     = params.fetch(:input)
-    @print      = params.fetch(:view)
+    @output     = params.fetch(:view)
   end
 
   def start
     turns = 10
     hidden_code = new_hidden_code
 
-    @print.greeting
+    @output.greeting
 
     loop do
+      @output.guess_prompt
       guess = @validator.new(hidden_code, player_guess)
-      hint_for(guess)
+      @output.round_feedback(turns, hint_for(guess))
       game_over?(guess, turns)
+
       turns -= 1
     end
+
+    @output.goodbye
   end
 
   def new_hidden_code

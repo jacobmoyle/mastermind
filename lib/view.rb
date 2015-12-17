@@ -18,22 +18,18 @@ class View
     puts '[enter] key.                                        '
   end
 
-  def prompt_guess(remaining_guesses)
-    puts ''
-    puts "You have #{remaining_guesses} guesses left."
+  def guess_prompt
     puts 'What is your guess?'
-    prompt_input
-  end
-
-  def prompt_input
     print '> '
   end
 
-  def feedback(feedback = '')
+  def round_feedback(turns, feedback)
+    puts ''
+    puts "You have #{turns} guesses left."
     puts "Guess Feedback: #{feedback}"
   end
 
   def goodbye
-    puts 'Goodbye.'
+    puts 'Thanks for playing!'
   end
 end
