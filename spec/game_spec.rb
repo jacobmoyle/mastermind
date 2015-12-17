@@ -6,7 +6,7 @@ describe Game do
   let(:player)     { double('input') }
   let(:code_maker) { double('code') }
   let(:validator)  { double('feedback') }
-  let(:game)       { Game.new( input: player, code_maker: code_maker) }
+  let(:game)       { Game.new( input: player, code_maker: code_maker, code_checker: validator) }
 
   describe '#player_guess' do
     it 'asks a player for input until the input is valid' do
@@ -17,14 +17,12 @@ describe Game do
     end
   end
 
-  describe '#set_hidden_code' do
-    it 'updates the hidden code' do
-      allow(code_maker).to receive(:generate).and_return('abcd')
+  describe '#new_hidden_code' do
+    it 'provides a new code' do
+      rand_string = (0...8).map { (65 + rand(26)).chr }.join
+      allow(code_maker).to receive(:generate).and_return(rand_string)
 
-      previous_code = game.hidden_code
-      game.new_hidden_code
-
-      expect(game.hidden_code).to_not eq(previous_code)
+      expect(game.new_hidden_code).to eq(rand_string)
     end
   end
 

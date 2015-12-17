@@ -2,7 +2,7 @@ class Game
   attr_reader :hidden_code
   def initialize(params)
 #     @messages          = params.fetch(:terminal_messages)
-    # @validator  = params.fetch(:code_checker)
+    @validator  = params.fetch(:code_checker)
     @code_maker = params.fetch(:code_maker)
 #     @remaining_guesses = params.fetch(:attempts, 10)
     @player = params.fetch(:input)
@@ -12,7 +12,7 @@ class Game
 
   def start
     new_hidden_code
-    player_guess
+    checker = @validator.new(player_guess)
 #     @messages.greet
 #     @hidden_code = @code_maker.generate
 
@@ -30,7 +30,7 @@ class Game
   end
 
   def new_hidden_code
-    @hidden_code = @code_maker.generate
+    @code_maker.generate
   end
 
   def player_guess
