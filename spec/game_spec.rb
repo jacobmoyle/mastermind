@@ -4,7 +4,7 @@ describe Game do
   let(:player)     { double('input') }
   let(:code_maker) { double('code') }
   let(:validator)  { double('feedback') }
-  let(:game)       { Game.new( input: player, code_maker: code_maker, code_checker: validator) }
+  let(:game)       { Game.new( input: player, code_maker: code_maker, code_checker: validator, view: nil) }
 
   describe '#player_guess' do
     it 'asks a player for input until the input is valid' do
