@@ -10,12 +10,9 @@ class Game
     @hidden_code    = nil
   end
 
-  def new_hidden_code
-    @hidden_code = @code_maker.generate
-  end
-
-
   def start
+    new_hidden_code
+    player_guess
 #     @messages.greet
 #     @hidden_code = @code_maker.generate
 
@@ -32,6 +29,10 @@ class Game
 #     @messages.goodbye
   end
 
+  def new_hidden_code
+    @hidden_code = @code_maker.generate
+  end
+
   def player_guess
     input = ''
     until input.length == 4
@@ -40,9 +41,9 @@ class Game
     input
   end
 
-  def feedback
-    @validator.validate(player_guess)
-  end
+  # def feedback
+  #   @validator.validate(player_guess)
+  # end
 
 #   private
 
