@@ -15,7 +15,6 @@ class Game
       game_over?(guess, turns)
       turns -= 1
     end
-
   end
 
   def new_hidden_code
@@ -37,5 +36,4 @@ class Game
   def game_over?(guess, turns)
     guess.correct? || turns == 0
   end
-
 end

@@ -59,7 +59,5 @@ describe Game do
       expect(game.game_over?(guess, turns)).to eq(true)
     end
   end
-
 end
-
 
