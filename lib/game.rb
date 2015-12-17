@@ -4,10 +4,9 @@ class Game
 #     @messages          = params.fetch(:terminal_messages)
     @validator  = params.fetch(:code_checker)
     @code_maker = params.fetch(:code_maker)
-#     @remaining_guesses = params.fetch(:attempts, 10)
-    @player = params.fetch(:input)
+    @turns      = params.fetch(:attempts, 10)
+    @player     = params.fetch(:input)
 #     @last_guess        = nil
-    @hidden_code    = nil
   end
 
   def start
