@@ -1,5 +1,5 @@
 class Player
-  def new_guess
+  def guess
     gets.chomp
   end
 end
