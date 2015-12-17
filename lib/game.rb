@@ -11,8 +11,11 @@ class Game
   end
 
   def start
-    new_hidden_code
-    checker = @validator.new(player_guess)
+    hidden_code = new_hidden_code
+
+    guess = validator.new(hidden_code, player_guess)
+
+
 #     @messages.greet
 #     @hidden_code = @code_maker.generate
 
@@ -41,8 +44,8 @@ class Game
     input
   end
 
-  def feedback
-    'oooo'
+  def hint_for(guess)
+    guess.hint
   end
 
 #   private

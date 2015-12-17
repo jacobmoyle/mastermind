@@ -26,21 +26,13 @@ describe Game do
     end
   end
 
-  describe '#feedback' do
-    it 'provides feedback on the players guess' do
-      allow(player).to receive(:guess).and_return('aaaa')
-      allow(code_maker).to receive(:generate).and_return('bbbb')
-      allow(validator).to receive(:hint).and_return('')
-
-      expect(game.feedback).to eq('')
-    end
+  describe '#hint_for' do
+    let(:guess) { double('guess object') }
 
     it 'provides feedback on the players guess' do
-      allow(player).to receive(:guess).and_return('aaab')
-      allow(code_maker).to receive(:generate).and_return('aaaa')
-      allow(validator).to receive(:hint).and_return('ooo')
+      allow(guess).to receive(:hint).and_return('some feedback')
 
-      expect(game.feedback).to eq('ooo')
+      expect(game.hint_for(guess)).to eq('some feedback')
     end
   end
 
