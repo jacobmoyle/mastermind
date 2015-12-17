@@ -1,4 +1,4 @@
-class Messages
+class View
   def greet
     puts '                 Welcome MasterMind                 '
     puts '                    INSTRUCTIONS                    '
