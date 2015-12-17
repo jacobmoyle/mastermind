@@ -41,9 +41,9 @@ class Game
     input
   end
 
-  # def feedback
-  #   @validator.validate(player_guess)
-  # end
+  def feedback
+    'oooo'
+  end
 
 #   private
 

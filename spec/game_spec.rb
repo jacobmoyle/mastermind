@@ -5,7 +5,7 @@ require_relative '../lib/game'
 describe Game do
   let(:player)     { double('input') }
   let(:code_maker) { double('code') }
-  # let(:validator)  { GuessValidator.new }
+  let(:validator)  { double('feedback') }
   let(:game)       { Game.new( input: player, code_maker: code_maker) }
 
   describe '#player_guess' do
@@ -28,13 +28,22 @@ describe Game do
     end
   end
 
-  xit 'outputs correct feedback for the players input' do
-    # allow(player).to receive(:guess).and_return(code_maker.generate)
+  describe '#feedback' do
+    it 'provides feedback on the players guess' do
+      allow(player).to receive(:guess).and_return('aaaa')
+      allow(code_maker).to receive(:generate).and_return('bbbb')
+      allow(validator).to receive(:hint).and_return('')
 
-    # expected_response = validator.validate(
-      # code_maker.generate, player.guess)
+      expect(game.feedback).to eq('')
+    end
 
-    # expect(game.feedback).to eq(expected_response)
+    it 'provides feedback on the players guess' do
+      allow(player).to receive(:guess).and_return('aaab')
+      allow(code_maker).to receive(:generate).and_return('aaaa')
+      allow(validator).to receive(:hint).and_return('ooo')
+
+      expect(game.feedback).to eq('ooo')
+    end
   end
 
   xit 'ends the game if the player is out of guesses' do
