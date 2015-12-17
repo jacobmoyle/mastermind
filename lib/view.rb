@@ -6,6 +6,7 @@ class View
     puts 'with 4 of the following letters: A, B, C, D, E, F.  '
     puts 'Your job is to break the code (correct letters and  '
     puts 'correct order) with the least number of guesses.    '
+    puts '                                                    '
     puts 'You will have a total of 10 pattern guesses each    '
     puts 'game. After each guess the CodeMaker will provide   '
     puts 'feedback by telling you how many guesses are correct'
@@ -16,6 +17,7 @@ class View
     puts 'In order to submit a pattern guess you must first   '
     puts 'enter 4 valid characters then press the [return] or '
     puts '[enter] key.                                        '
+    puts '                                                    '
   end
 
   def guess_prompt

@@ -8,13 +8,13 @@ class Game
 
   def start
     turns = 10
-    hidden_code = new_hidden_code
+    code = new_hidden_code
 
     @output.greeting
 
     loop do
       @output.guess_prompt
-      guess = @validator.new(hidden_code, player_guess)
+      guess = @validator.new(hidden_code: code, guess: player_guess)
       @output.round_feedback(turns, hint_for(guess))
       game_over?(guess, turns)
 
