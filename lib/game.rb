@@ -48,6 +48,10 @@ class Game
     guess.hint
   end
 
+  def game_over?(guess, turns)
+    guess.correct? || turns == 0
+  end
+
 #   private
 
 #   def output_validator_response
