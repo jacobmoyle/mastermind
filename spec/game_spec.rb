@@ -5,9 +5,8 @@ require_relative '../lib/code_generator'
 describe Game do
   let(:player)     { double('input') }
   let(:code_maker) { double('code') }
-  let(:validator)  { GuessValidator.new }
-  let(:game)       { Game.new( input: player, code_checker: validator,
-   code_maker: code_maker,) }
+  # let(:validator)  { GuessValidator.new }
+  let(:game)       { Game.new( input: player, code_maker: code_maker) }
 
   describe '#player_guess' do
     it 'asks a player for input until the input is valid' do
