@@ -90,6 +90,11 @@ describe GuessValidator do
         guess = GuessValidator.new(hidden_code: code, guess: 'a2aa')
         expect(guess.hint).to eq('o')
       end
+
+      it 'returns a single match when it contains a match at different location and one at the correct location' do
+        validation_result = GuessValidator.new(hidden_code: code, guess: 'dxxd')
+        expect(validation_result.hint).to eq('o')
+      end
     end
 
     context 'when provided with multiple correct characters, in the correct placement' do
