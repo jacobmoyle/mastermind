@@ -25,6 +25,8 @@ class Game
     @output.goodbye
   end
 
+  private
+
   def new_hidden_code
     @code_maker.generate
   end
