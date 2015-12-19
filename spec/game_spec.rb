@@ -43,10 +43,10 @@ describe Game do
       allow(validator).to receive(:new).with(any_args)
         .and_return(validator)
       allow(code_maker).to receive(:generate).and_return('cccc')
-      allow(player).to receive(:guess).and_return('aaaa', 'cccc')
-      allow(validator).to receive(:correct?).and_return(false, true)
+      allow(player).to receive(:guess).and_return('cccc')
+      allow(validator).to receive(:correct?).and_return(true)
 
-      expect(player).to receive(:guess).twice
+      expect(player).to receive(:guess).once
       expect(output).to receive(:goodbye)
 
       game.start
