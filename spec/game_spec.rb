@@ -39,7 +39,17 @@ describe Game do
       game.start
     end
 
-    xit 'ends the game if a player guesses correctly' do
+    it 'ends the game if a player guesses correctly' do
+      allow(validator).to receive(:new).with(any_args)
+        .and_return(validator)
+      allow(code_maker).to receive(:generate).and_return('cccc')
+      allow(player).to receive(:guess).and_return('aaaa', 'cccc')
+      allow(validator).to receive(:correct?).and_return(false, true)
+
+      expect(player).to receive(:guess).twice
+      expect(output).to receive(:goodbye)
+
+      game.start
     end
   end
 
