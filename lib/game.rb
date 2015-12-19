@@ -7,7 +7,7 @@ class Game
   end
 
   def start
-    turns = 10
+    turns = 9
     code = new_hidden_code
 
     @output.greeting
