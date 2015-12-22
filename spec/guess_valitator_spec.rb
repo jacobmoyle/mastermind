@@ -12,6 +12,10 @@ describe GuessValidator do
       guess = GuessValidator.new(hidden_code: 'aaaa', guess: 'bbbb')
       expect(guess.correct?).to eq(false)
     end
+    it 'is not case sensitive' do
+      guess = GuessValidator.new(hidden_code: 'ABCD', guess: 'abcd')
+      expect(guess.correct?).to eq(true)
+    end
   end
 
   describe '#hint' do

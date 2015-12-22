@@ -5,7 +5,7 @@ class GuessValidator
   end
 
   def correct?
-    @code == @guess
+    capitalize(@code) == capitalize(@guess)
   end
 
   def hint
@@ -18,8 +18,12 @@ class GuessValidator
     nil
   end
 
+  def capitalize(string)
+    string.upcase
+  end
+
   def format_code(string)
-    string.upcase.split('')
+    capitalize(string).split('')
   end
 
   def validation
