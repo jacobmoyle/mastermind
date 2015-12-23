@@ -123,7 +123,7 @@ describe GuessValidator do
 
       it 'only counts the guessed characters once' do
         guess = GuessValidator.new(hidden_code: code, guess: 'baaa')
-        expect(guess.hint).to eq('xox')
+        expect(guess.hint).to eq('oxx')
       end
     end
 

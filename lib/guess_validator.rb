@@ -1,53 +1,54 @@
 class GuessValidator
   def initialize(params)
-    @code  = params[:hidden_code]
-    @guess = params[:guess]
+    @code  = format_code(params[:hidden_code])
+    @guess = format_code(params[:guess])
   end
 
   def correct?
-    capitalize(@code) == capitalize(@guess)
+    @code == @guess
   end
 
   def hint
-    @hint ||= validation
+    @hint ||= exact_feedback.concat(character_feedback).join
   end
 
   private
 
-  def used_character
-    nil
-  end
-
-  def capitalize(string)
-    string.upcase
-  end
-
   def format_code(string)
-    capitalize(string).split('')
+    string.upcase.split('')
   end
 
-  def validation
-    code_array  = format_code(@code)
-    guess_array = format_code(@guess)
-    response    = String.new
+  def exact_feedback
+    @used_indices = []
+    results = []
 
-    guess_array.each_with_index do |char, index|
-
-      if char == code_array[index] && char != used_character
-
-        response.concat('o')
-        code_array[index]  = used_character
-        guess_array[index] = used_character
-      end
-
-      if char != used_character && code_index = code_array.index(char)
-
-        response.concat('x')
-        code_array[code_index] = used_character
-        guess_array[index]     = used_character
+    @guess.each_with_index do |char, index|
+      if @code[index] == char
+        results << 'o'
+        @used_indices << index
       end
     end
 
-    response
+    results
+  end
+
+  def character_feedback
+    results = []
+
+    unused_characters(@guess, '+').uniq.each do |character|
+      results << 'x' if unused_characters(@code, '-').include?(character)
+    end
+
+    results
+  end
+
+  def unused_characters(sequence, matched_placeholder)
+    new_sequence = sequence.clone
+
+    @used_indices.each do |position|
+      new_sequence[position] = matched_placeholder
+    end
+
+    new_sequence
   end
 end
