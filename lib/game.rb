@@ -13,8 +13,10 @@ class Game
     @output.greeting
 
     loop do
+      # move this into prompt loop
       @output.guess_prompt
       guess = @validator.new(hidden_code: code, guess: player_guess)
+      # hint_for seems to bury guess hint too much, remove
       @output.round_feedback(turns, hint_for(guess))
 
       break if game_over?(guess, turns)
@@ -33,7 +35,7 @@ class Game
 
   def player_guess
     input = ''
-    until input.length == 4
+    until @rules.valid_guess?(input)
       input = @player.guess
     end
     input
