@@ -1,18 +1,18 @@
-require_relative '../lib/player'
+# require_relative '../lib/player'
 
-describe Player do
-  describe '#guess' do
+# describe Player do
+#   describe '#guess' do
 
-    before do
-      $stdin = StringIO.new("aacd\n")
-    end
+#     before do
+#       $stdin = StringIO.new("aacd\n")
+#     end
 
-    after do
-      $stdin = STDIN
-    end
+#     after do
+#       $stdin = STDIN
+#     end
 
-    it 'returns input' do
-      expect(subject.guess).to eq('aacd')
-    end
-  end
-end
+#     it 'returns input' do
+#       expect(subject.guess).to eq('aacd')
+#     end
+#   end
+# end
