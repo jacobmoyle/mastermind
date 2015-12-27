@@ -1,11 +1,38 @@
 require_relative '../lib/game'
+require_relative '../lib/rules'
 
 describe Game do
-  let(:player)     { double('input', guess: 'temp') }
-  let(:code_maker) { double('code', generate: '') }
-  let(:validator)  { double('feedback', hint: 'hint', correct?: nil) }
-  let(:output)     { double('view', greeting: 'hi', guess_prompt: 'input something', round_feedback: 'things happened', goodbye: 'fin')}
-  let(:game)       { Game.new( input: player, code_maker: code_maker, code_checker: validator, view: output) }
+  let(:rules) {
+    Rules.new
+      }
+  let(:player) {
+    double('input',
+      guess: 'temp'
+    )}
+  let(:code_maker) {
+    double('code',
+      generate: ''
+    )}
+  let(:validator) {
+    double('feedback',
+      hint: 'hint',
+      correct?: nil
+    )}
+  let(:output) {
+    double('view',
+      greeting: 'hi',
+      guess_prompt: 'input something',
+      round_feedback: 'things happened',
+      goodbye: 'fin'
+    )}
+  let(:game) {
+      Game.new(
+        input: player,
+        code_maker: code_maker,
+        code_checker: validator,
+        view: output,
+        game_rules: rules
+    )}
 
 
   describe '#start' do
