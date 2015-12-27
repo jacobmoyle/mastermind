@@ -4,6 +4,7 @@ class Game
     @code_maker = params.fetch(:code_maker)
     @player     = params.fetch(:input)
     @output     = params.fetch(:view)
+    @rules      = params.fetch(:game_rules)
   end
 
   def start
