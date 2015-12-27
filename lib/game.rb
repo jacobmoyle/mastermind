@@ -11,24 +11,35 @@ class Game
     turns = 9
     code = new_hidden_code
 
-    @output.greeting
-
+    output_start
     loop do
-      # move this into prompt loop
-      @output.guess_prompt
-      guess = @validator.new(hidden_code: code, guess: player_guess)
-      # hint_for seems to bury guess hint too much, remove
-      @output.round_feedback(turns, hint_for(guess))
+      guess = new_guess(code, player_guess)
+      output_round_feedback(turns, hint_for(guess))
 
       break if game_over?(guess, turns)
 
       turns -= 1
     end
-
-    @output.goodbye
+    output_end
   end
 
   private
+
+  def output_start
+    @output.greeting
+  end
+
+  def output_end
+    @output.goodbye
+  end
+
+  def new_guess(code, guess)
+    @validator.new(hidden_code: code, guess: guess)
+  end
+
+  def output_round_feedback(turns, hint)
+    @output.round_feedback(turns, hint)
+  end
 
   def new_hidden_code
     @code_maker.generate
@@ -37,6 +48,7 @@ class Game
   def player_guess
     input = ''
     until @rules.valid_guess?(input)
+      @output.guess_prompt
       input = @player.guess
     end
     input
