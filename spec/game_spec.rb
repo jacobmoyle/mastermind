@@ -4,7 +4,7 @@ require_relative '../lib/rules'
 describe Game do
   let(:rules) {
     Rules.new
-      }
+       }
   let(:player) {
     double('input',
       guess: 'temp'
