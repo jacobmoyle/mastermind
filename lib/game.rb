@@ -13,7 +13,7 @@ class Game
 
     output_start
     loop do
-      guess = new_guess(code, player_guess)
+      guess  = new_guess(code, player_guess)
       output_round_feedback(turns, hint_for(guess))
 
       break if game_over?(guess, turns)
