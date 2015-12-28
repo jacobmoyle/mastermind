@@ -26,4 +26,17 @@ describe Rules do
       end
     end
   end
+
+  describe '#turn_over' do
+    context 'when turns remain' do
+      it 'should not raise' do
+        expect { subject.turn_over }.to_not raise_error
+      end
+    end
+    context 'when ten turns have been made' do
+      it 'should raise an error' do
+        expect { 10.times { subject.turn_over } }.to raise_error
+      end
+    end
+  end
 end

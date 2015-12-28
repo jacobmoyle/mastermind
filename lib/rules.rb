@@ -1,4 +1,8 @@
 class Rules
+  def initialize
+    @turns = 9
+  end
+
   def valid_guess?(string)
     guess = format(string)
     valid_char = ['a','b','c','d','e','f']
@@ -8,6 +12,13 @@ class Rules
       valid_char.include?(char)
       }.empty?
     false
+  end
+
+  def turn_over
+    @turns -= 1
+    if @turns <= 0
+      raise "No turns remain"
+    end
   end
 
   private
