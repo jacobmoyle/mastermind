@@ -1,18 +1,14 @@
 class Rules
   attr_reader :turns
+
   def initialize
     @turns = 9
   end
 
   def valid_guess?(string)
     guess = format(string)
-    valid_char = ['a','b','c','d','e','f']
 
-    return true if guess.length == 4 &&
-    guess.drop_while { |char|
-      valid_char.include?(char)
-      }.empty?
-    false
+    correct_length?(guess) && valid_characters?(guess)
   end
 
   def turn_over
@@ -23,6 +19,17 @@ class Rules
   end
 
   private
+
+  def valid_characters?(guess)
+    valid_char = ['a','b','c','d','e','f']
+    guess.drop_while { |char|
+      valid_char.include?(char)
+    }.empty?
+  end
+
+  def correct_length?(guess)
+    guess.length == 4
+  end
 
   def format(string)
     string.split('')
