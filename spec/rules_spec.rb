@@ -37,32 +37,26 @@ describe Rules do
 
   describe '#turn_over' do
 
+    it 'when turns remain should not raise an error' do
+      expect { subject.turn_over }.to_not raise_error
+    end
+    it 'should raise an error when zero turns remain' do
+      new_rules = Rules.new
+      expect {
+        until new_rules.turns == 0
+          subject.turn_over
+        end
+      }.to raise_error
+    end
     it 'turns decrease by one each time #turn_over is run' do
       new_rules = Rules.new
       count = 9
 
-      9.times do
+      9.times {
         expect(new_rules.turns).to eq(count)
         count -= 1
         new_rules.turn_over
-      end
-    end
-
-    context 'when turns remain' do
-      it 'should not raise' do
-        expect { subject.turn_over }.to_not raise_error
-      end
-    end
-
-    it 'should raise an error when zero turns remain' do
-      new_rules = Rules.new
-      expect {
-
-        until new_rules.turns == 0
-          subject.turn_over
-        end
-
-      }.to raise_error
+      }
     end
   end
 end
