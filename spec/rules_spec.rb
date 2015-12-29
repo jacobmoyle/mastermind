@@ -87,3 +87,10 @@ describe Rules do
   end
 
 end
+
+# impliment Rules to Game
+# Deal with any tests that fail
+# Create a rules mock in Game tests
+# Clean out all comments
+# Create tests for View
+# Create tests for player
