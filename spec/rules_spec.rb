@@ -57,39 +57,31 @@ describe Rules do
   describe '#game_over?' do
     context 'when guess is incorrect' do
       it 'returns false if turns remain' do
-        guess = double('guess')
-        allow(guess).to receive(:correct?).and_return(false)
         new_rules = Rules.new
         9.times {
           new_rules.subtract_turn
-          expect(new_rules.game_over?(guess)).to eq(false)
+          expect(new_rules.game_over?(false)).to eq(false)
         }
       end
       it 'returns true when no turns remain' do
-        guess = double('guess')
-        allow(guess).to receive(:correct?).and_return(false)
         new_rules = Rules.new
         10.times {
           new_rules.subtract_turn
         }
-        expect(new_rules.game_over?(guess)).to eq(true)
+        expect(new_rules.game_over?(false)).to eq(true)
       end
     end
 
     context 'when guess is correct' do
       it 'returns true when there are turns left' do
-        guess = double('guess')
-        allow(guess).to receive(:correct?).and_return(true)
         new_rules = Rules.new
-        expect(new_rules.game_over?(guess)).to eq(true)
+        expect(new_rules.game_over?(true)).to eq(true)
       end
     end
   end
 
 end
 
-# impliment Rules to Game
-# Deal with any tests that fail
 # Create a rules mock in Game tests
 # Clean out all comments
 # Create tests for View

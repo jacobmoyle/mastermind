@@ -27,10 +27,6 @@ class Game
     @rules.game_over?(guess_outcome)
   end
 
-  def hint_for(guess)
-    guess.hint
-  end
-
   def remaining_turns
     @rules.turns
   end
