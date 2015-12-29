@@ -81,8 +81,3 @@ describe Rules do
   end
 
 end
-
-# Create a rules mock in Game tests
-# Clean out all comments
-# Create tests for View
-# Create tests for player
