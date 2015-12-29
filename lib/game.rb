@@ -2,39 +2,53 @@ class Game
   def initialize(params)
     @validator  = params.fetch(:code_checker)
     @code_maker = params.fetch(:code_maker)
-    @player     = params.fetch(:input)
+    @input      = params.fetch(:input)
     @output     = params.fetch(:view)
     @rules      = params.fetch(:game_rules)
   end
 
   def start
-    turns = 9
     code = new_hidden_code
-
     output_start
+
     loop do
-      guess  = new_guess(code, player_guess)
-      output_round_feedback(turns, hint_for(guess))
-
-      break if game_over?(guess, turns)
-
-      turns -= 1
+      incriment_turn
+      guess = new_guess(code, valid_guess)
+      output_round_feedback(remaining_turns, guess.hint)
+      break if conditions_met(guess.correct?)
     end
+
     output_end
   end
 
   private
 
+  def conditions_met(guess_outcome)
+    @rules.game_over?(guess_outcome)
+  end
+
+  def hint_for(guess)
+    guess.hint
+  end
+
+  def remaining_turns
+    @rules.turns
+  end
+
   def output_start
     @output.greeting
+  end
+
+  def incriment_turn
+    @rules.subtract_turn
   end
 
   def output_end
     @output.goodbye
   end
 
-  def new_guess(code, guess)
-    @validator.new(hidden_code: code, guess: guess)
+  def new_guess(code, new_guess)
+    @validator.new(hidden_code: code, guess: new_guess)
   end
 
   def output_round_feedback(turns, hint)
@@ -45,20 +59,16 @@ class Game
     @code_maker.generate
   end
 
-  def player_guess
-    input = ''
-    until @rules.valid_guess?(input)
+  def valid_guess
+    @output.guess_prompt
+    new_guess = @input.guess
+
+    until @rules.valid_guess?(new_guess)
+      @output.guess_invalid
       @output.guess_prompt
-      input = @player.guess
+      new_guess = @input.guess
     end
-    input
-  end
 
-  def hint_for(guess)
-    guess.hint
-  end
-
-  def game_over?(guess, turns)
-    guess.correct? || turns == 0
+    new_guess
   end
 end

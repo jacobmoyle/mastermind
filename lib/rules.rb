@@ -11,8 +11,8 @@ class Rules
     correct_length?(input) && valid_characters?(input)
   end
 
-  def game_over?(guess)
-    guess.correct? || @turns == 0
+  def game_over?(guess_outcome)
+    guess_outcome || @turns == 0
   end
 
   def subtract_turn
