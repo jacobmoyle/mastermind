@@ -6,9 +6,13 @@ class Rules
   end
 
   def valid_guess?(string)
-    guess = format(string)
+    input = format(string)
 
-    correct_length?(guess) && valid_characters?(guess)
+    correct_length?(input) && valid_characters?(input)
+  end
+
+  def game_over?(guess)
+    guess.correct? || turns == 0
   end
 
   def turn_over
@@ -20,15 +24,15 @@ class Rules
 
   private
 
-  def valid_characters?(guess)
+  def valid_characters?(array)
     valid_char = ['a','b','c','d','e','f']
-    guess.drop_while { |char|
+    array.drop_while { |char|
       valid_char.include?(char)
     }.empty?
   end
 
-  def correct_length?(guess)
-    guess.length == 4
+  def correct_length?(input)
+    input.length == 4
   end
 
   def format(string)

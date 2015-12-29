@@ -1,11 +1,8 @@
 require_relative '../lib/rules'
 
 describe Rules do
-
   describe '#valid_guess?' do
-
     context 'when using correct characters' do
-
       it 'returns true if the input is 4 characters long' do
         expect(subject.valid_guess?('cccc')).to eq(true)
       end
@@ -18,7 +15,6 @@ describe Rules do
     end
 
     context 'when using incorrect characters' do
-
       it 'returns false if the input includes invalid characters at the length of 4' do
         expect(subject.valid_guess?('¬˚˜å')).to eq(false)
         expect(subject.valid_guess?('abqr')).to eq(false)
@@ -28,7 +24,6 @@ describe Rules do
   end
 
   describe '#turns' do
-
     it 'defaults to 9 upon initialization' do
       new_rules = Rules.new
       expect(new_rules.turns).to eq(9)
@@ -36,7 +31,6 @@ describe Rules do
   end
 
   describe '#turn_over' do
-
     it 'when turns remain should not raise an error' do
       expect { subject.turn_over }.to_not raise_error
     end
@@ -59,4 +53,19 @@ describe Rules do
       }
     end
   end
+
+  describe '#game_over?' do
+    context 'when guess is incorrect' do
+      it 'returns false if turns remain' do
+        guess = double('guess')
+        allow(guess).to receive(:correct?).and_return(false)
+        new_rules = Rules.new
+        9.times {
+          new_rules.turn_over
+          expect(new_rules.game_over?(guess)).to eq(false)
+        }
+      end
+    end
+  end
+
 end
