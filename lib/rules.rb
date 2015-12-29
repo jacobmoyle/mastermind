@@ -15,7 +15,7 @@ class Rules
     guess.correct? || @turns == 0
   end
 
-  def turn_over
+  def subtract_turn
     @turns -= 1
     if @turns == -1
       raise "No turns remain"

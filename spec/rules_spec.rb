@@ -30,26 +30,26 @@ describe Rules do
     end
   end
 
-  describe '#turn_over' do
+  describe '#subtract_turn' do
     it 'when turns remain should not raise an error' do
-      expect { subject.turn_over }.to_not raise_error
+      expect { subject.subtract_turn }.to_not raise_error
     end
     it 'should raise an error when zero turns remain' do
       new_rules = Rules.new
       expect {
         until new_rules.turns == 0
-          subject.turn_over
+          subject.subtract_turn
         end
       }.to raise_error
     end
-    it 'turns decrease by one each time #turn_over is run' do
+    it 'turns decrease by one each time #subtract_turn is run' do
       new_rules = Rules.new
       count = 10
 
       9.times {
         expect(new_rules.turns).to eq(count)
         count -= 1
-        new_rules.turn_over
+        new_rules.subtract_turn
       }
     end
   end
@@ -61,7 +61,7 @@ describe Rules do
         allow(guess).to receive(:correct?).and_return(false)
         new_rules = Rules.new
         9.times {
-          new_rules.turn_over
+          new_rules.subtract_turn
           expect(new_rules.game_over?(guess)).to eq(false)
         }
       end
@@ -70,7 +70,7 @@ describe Rules do
         allow(guess).to receive(:correct?).and_return(false)
         new_rules = Rules.new
         10.times {
-          new_rules.turn_over
+          new_rules.subtract_turn
         }
         expect(new_rules.game_over?(guess)).to eq(true)
       end
