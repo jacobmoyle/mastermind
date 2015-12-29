@@ -75,6 +75,15 @@ describe Rules do
         expect(new_rules.game_over?(guess)).to eq(true)
       end
     end
+
+    context 'when guess is correct' do
+      it 'returns true when there are turns left' do
+        guess = double('guess')
+        allow(guess).to receive(:correct?).and_return(true)
+        new_rules = Rules.new
+        expect(new_rules.game_over?(guess)).to eq(true)
+      end
+    end
   end
 
 end
