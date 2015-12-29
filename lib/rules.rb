@@ -1,4 +1,5 @@
 class Rules
+  attr_reader :turns
   def initialize
     @turns = 9
   end
@@ -16,7 +17,7 @@ class Rules
 
   def turn_over
     @turns -= 1
-    if @turns <= 0
+    if @turns == -1
       raise "No turns remain"
     end
   end
