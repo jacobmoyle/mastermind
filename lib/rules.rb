@@ -2,7 +2,7 @@ class Rules
   attr_reader :turns
 
   def initialize
-    @turns = 9
+    @turns = 10
   end
 
   def valid_guess?(string)
@@ -12,7 +12,7 @@ class Rules
   end
 
   def game_over?(guess)
-    guess.correct? || turns == 0
+    guess.correct? || @turns == 0
   end
 
   def turn_over

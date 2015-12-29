@@ -24,9 +24,9 @@ describe Rules do
   end
 
   describe '#turns' do
-    it 'defaults to 9 upon initialization' do
+    it 'defaults to 10 upon initialization' do
       new_rules = Rules.new
-      expect(new_rules.turns).to eq(9)
+      expect(new_rules.turns).to eq(10)
     end
   end
 
@@ -44,7 +44,7 @@ describe Rules do
     end
     it 'turns decrease by one each time #turn_over is run' do
       new_rules = Rules.new
-      count = 9
+      count = 10
 
       9.times {
         expect(new_rules.turns).to eq(count)
@@ -64,6 +64,15 @@ describe Rules do
           new_rules.turn_over
           expect(new_rules.game_over?(guess)).to eq(false)
         }
+      end
+      it 'returns true when no turns remain' do
+        guess = double('guess')
+        allow(guess).to receive(:correct?).and_return(false)
+        new_rules = Rules.new
+        10.times {
+          new_rules.turn_over
+        }
+        expect(new_rules.game_over?(guess)).to eq(true)
       end
     end
   end
