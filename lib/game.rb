@@ -23,6 +23,19 @@ class Game
 
   private
 
+  def valid_guess
+    @output.guess_prompt
+    guess = new_input
+
+    until @rules.valid_guess?(guess)
+      @output.guess_invalid
+      @output.guess_prompt
+      guess = new_input
+    end
+
+    guess
+  end
+
   def conditions_met(guess_outcome)
     @rules.game_over?(guess_outcome)
   end
@@ -55,16 +68,7 @@ class Game
     @code_maker.generate
   end
 
-  def valid_guess
-    @output.guess_prompt
-    new_guess = @input.guess
-
-    until @rules.valid_guess?(new_guess)
-      @output.guess_invalid
-      @output.guess_prompt
-      new_guess = @input.guess
-    end
-
-    new_guess
+  def new_input
+    @input.guess
   end
 end
