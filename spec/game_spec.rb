@@ -4,7 +4,7 @@ require_relative '../lib/rules'
 describe Game do
   let(:rules) {
     Rules.new
-       }
+   }
   let(:player) {
     double('input')
   }
@@ -20,7 +20,7 @@ describe Game do
       guess_prompt: 'input something',
       round_feedback: 'things happened',
       goodbye: 'fin'
-    )}
+  )}
   let(:game) {
       Game.new(
         input: player,
@@ -28,7 +28,7 @@ describe Game do
         code_checker: validator,
         view: output,
         game_rules: rules
-    )}
+  )}
 
 
   describe '#start' do
