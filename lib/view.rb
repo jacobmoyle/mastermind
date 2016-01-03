@@ -17,12 +17,22 @@ class View
     puts 'In order to submit a pattern guess you must first   '
     puts 'enter 4 valid characters then press the [return] or '
     puts '[enter] key.                                        '
-    puts '                                                    '
   end
 
   def guess_prompt
-    puts 'What is your guess?'
+    puts '                                                    '
+    puts 'What is your guess?                                 '
     print '> '
+  end
+
+  def guess_invalid
+    puts ''
+    puts '* * * * * * * * * INVALID GUESS * * * * * * * * * *'
+    puts ''
+    puts 'A valid guess is four characters long, comprised of'
+    puts 'any characters, A-F.'
+    puts ''
+    puts '* * * * * * * * * * * * * * * * * * * * * * * * * *'
   end
 
   def round_feedback(turns, feedback)
