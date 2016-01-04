@@ -1,5 +1,4 @@
-require_relative '../lib/game'
-require_relative '../lib/rules'
+require_relative 'spec_helper'
 
 describe Game do
   let(:rules) {

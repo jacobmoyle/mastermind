@@ -1,4 +1,4 @@
-require_relative '../lib/guess_validator'
+require_relative 'spec_helper'
 
 describe GuessValidator do
 
