@@ -1,4 +1,4 @@
-require_relative '../lib/code_generator'
+require_relative 'spec_helper'
 
 describe CodeGenerator do
 
