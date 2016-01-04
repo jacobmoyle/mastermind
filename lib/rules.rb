@@ -16,16 +16,14 @@ class Rules
 
   def subtract_turn
     @turns -= 1
-    if @turns == -1
-      raise "No turns remain"
-    end
+    raise "No turns remain" if @turns == -1
   end
 
   private
 
   def valid_characters?(string)
     valid_char = ['a','b','c','d','e','f']
-    format(string).drop_while { |char|
+    split(string).drop_while { |char|
       valid_char.include?(char)
     }.empty?
   end
@@ -34,7 +32,7 @@ class Rules
     input.length == @length
   end
 
-  def format(string)
+  def split(string)
     string.split('')
   end
 end
