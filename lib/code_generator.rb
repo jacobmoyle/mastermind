@@ -1,11 +1,12 @@
 class CodeGenerator
-  def initialize
-    @character_pool = ["A","B","C","D","E","F"]
+  def initialize(pool = ["A","B","C","D","E","F"], length = 4)
+    @char_pool   = pool
+    @code_length = length
   end
 
   def generate
     new_code = ""
-    code_length.times do
+    @code_length.times do
       new_code.concat(random_character)
     end
     new_code
@@ -13,11 +14,7 @@ class CodeGenerator
 
   private
 
-  def code_length
-    4
-  end
-
   def random_character
-    @character_pool.sample
+    @char_pool.sample
   end
 end
