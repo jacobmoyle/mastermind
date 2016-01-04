@@ -1,8 +1,9 @@
 class Rules
   attr_reader :turns
 
-  def initialize
-    @turns = 10
+  def initialize(total_turns = 10, code_length = 4)
+    @length = code_length
+    @turns  = total_turns
   end
 
   def valid_guess?(input)
@@ -30,7 +31,7 @@ class Rules
   end
 
   def correct_length?(input)
-    input.length == 4
+    input.length == @length
   end
 
   def format(string)
