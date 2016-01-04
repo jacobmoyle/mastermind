@@ -33,11 +33,11 @@ class Rules
 
   def valid_characters?(string)
     split(string).drop_while { |char|
-      valid_character?(char)
+      check_character?(char)
     }.empty?
   end
 
-  def valid_character?(char)
+  def check_character?(char)
     ['a','b','c','d','e','f'].include?(char)
   end
 
