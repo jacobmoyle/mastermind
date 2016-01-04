@@ -10,9 +10,8 @@ class Game
   def start
     code = new_hidden_code
     output_start
-
     loop do
-      incriment_turn
+      start_turn
       guess = new_guess(code, valid_guess)
       output_round_feedback(remaining_turns, guess.hint)
       break if conditions_met(guess.correct?)
@@ -48,7 +47,7 @@ class Game
     @output.greeting
   end
 
-  def incriment_turn
+  def start_turn
     @rules.subtract_turn
   end
 

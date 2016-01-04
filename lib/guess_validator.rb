@@ -1,7 +1,7 @@
 class GuessValidator
   def initialize(params)
-    @code  = format_code(params[:hidden_code])
-    @guess = format_code(params[:guess])
+    @code  = formatted(params[:hidden_code])
+    @guess = formatted(params[:guess])
   end
 
   def correct?
@@ -14,7 +14,7 @@ class GuessValidator
 
   private
 
-  def format_code(string)
+  def formatted(string)
     string.upcase.split('')
   end
 
