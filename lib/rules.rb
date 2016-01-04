@@ -5,9 +5,7 @@ class Rules
     @turns = 10
   end
 
-  def valid_guess?(string)
-    input = format(string)
-
+  def valid_guess?(input)
     correct_length?(input) && valid_characters?(input)
   end
 
@@ -24,9 +22,9 @@ class Rules
 
   private
 
-  def valid_characters?(array)
+  def valid_characters?(string)
     valid_char = ['a','b','c','d','e','f']
-    array.drop_while { |char|
+    format(string).drop_while { |char|
       valid_char.include?(char)
     }.empty?
   end

@@ -13,13 +13,14 @@ describe Game do
   let(:validator) {
     double('feedback')
   }
-  let(:output) {
-    double('view',
-      greeting: 'hi',
-      guess_prompt: 'input something',
-      round_feedback: 'things happened',
-      goodbye: 'fin'
-  )}
+  let(:output) { View.new
+  #   double('view',
+  #     greeting: 'hi',
+  #     guess_prompt: 'input something',
+  #     round_feedback: 'things happened',
+  #     goodbye: 'fin'
+  # )
+}
   let(:game) {
       Game.new(
         input: player,
@@ -37,6 +38,23 @@ describe Game do
       allow(rules).to receive(:subtract_turn).with(no_args)
       allow(rules).to receive(:turns).with(no_args).and_return(9,8,7,6,5,4,3,2,1)
       allow(rules).to receive(:valid_guess?).with(an_instance_of(String)).and_return(true)
+    end
+
+    context 'when input is incorrect' do
+
+      before do
+        allow(rules).to receive(:valid_guess?).with(an_instance_of(String)).and_return(false,false,false,true)
+        allow(rules).to receive(:game_over?).and_return(true)
+        allow(validator).to receive(:hint).and_return('correct')
+        allow(player).to receive(:guess).and_return('1234','zzssw','','abcd')
+        allow(code_maker).to receive(:generate).and_return('abcd')
+        allow(validator).to receive(:correct?).and_return(true)
+      end
+
+      it 'will repeatedly inform user input is invalid until valid input is supplied' do
+        expect(output).to receive(:guess_invalid).exactly(3).times
+        game.start
+      end
     end
 
     context 'first guess is correct' do
@@ -99,7 +117,8 @@ describe Game do
         expect(output).to receive(:round_feedback).with(4, 'six').ordered
         expect(output).to receive(:round_feedback).with(3, 'seven').ordered
         expect(output).to receive(:round_feedback).with(2, 'eight').ordered
-        expect(output).to receive(:round_feedback).with(1, 'right').ordered
+        expect(output).to receive(:round_feedback).with(1, 'nine').ordered
+        expect(output).to receive(:round_feedback).with(0, 'right').ordered
 
         game.start
       end
@@ -114,6 +133,9 @@ describe Game do
       it 'checks if guess is correct ten times' do
         expect(validator).to receive(:correct?).exactly(10).times
         game.start
+      end
+      it 'reduces turns remaining nine times' do
+      expect(rules).to receive(:subtract_turn).exactly(9).times
       end
     end
 

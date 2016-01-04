@@ -10,7 +10,7 @@ class Game
   def start
     code = new_hidden_code
     output_start
-
+    p code
     loop do
       incriment_turn
       guess = new_guess(code, valid_guess)
