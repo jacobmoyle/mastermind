@@ -26,16 +26,24 @@ describe Game do
     context 'when input is incorrect' do
 
       before do
-        allow(rules).to receive(:valid_guess?).with(an_instance_of(String)).and_return(false,false,false,true)
-        allow(rules).to receive(:game_over?).and_return(true)
-        allow(validator).to receive(:hint).and_return('correct')
-        allow(player).to receive(:guess).and_return('1234','zzssw','','abcd')
-        allow(code_maker).to receive(:generate).and_return('abcd')
+        allow(validator).to receive(:hint).and_return('feedback')
+        allow(player).to receive(:guess).and_return('wrong','valid')
+        allow(rules).to receive(:valid_guess?).with('wrong').and_return(false)
+        allow(rules).to receive(:valid_guess?).with('valid').and_return(true)
+        allow(code_maker).to receive(:generate).and_return('code')
+        allow(rules).to receive(:game_over?).and_return(false,true)
         allow(validator).to receive(:correct?).and_return(true)
       end
 
-      it 'will repeatedly inform user input is invalid until valid input is supplied' do
-        expect(output).to receive(:guess_invalid).exactly(3).times
+      it 'an error will be sent to the user' do
+        expect(output).to receive(:guess_invalid).once
+        game.start
+      end
+      it 'a turn will be used only after a valid guess has been submitted' do
+        expect(rules).to receive(:subtract_turn).ordered
+        expect(player).to receive(:guess).twice.ordered
+        expect(rules).to receive(:subtract_turn).ordered
+        expect(player).to receive(:guess).ordered
         game.start
       end
     end
