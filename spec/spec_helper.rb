@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require_relative '../lib/game'
 require_relative '../lib/view'
 require_relative '../lib/code_generator'
