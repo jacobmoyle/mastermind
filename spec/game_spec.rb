@@ -94,51 +94,6 @@ describe Game do
       end
     end
 
-    context 'player is right on the 10th guess' do
-
-      before do
-        allow(rules).to receive(:game_over?).and_return(
-          false,false,false,false,false,false,false,false,false,true)
-        allow(code_maker).to receive(:generate).and_return('ffff')
-        allow(player).to receive(:guess).and_return(
-          'aaaa','bbbb','cccc','dddd','eeee','abcd','aacc','eeff','bcde','ffff')
-        allow(validator).to receive(:hint).and_return(
-          'one','two','three','four','five','six','seven','eight','nine','right')
-        allow(validator).to receive(:correct?).and_return(
-          false,false,false,false,false,false,false,false,false,true)
-      end
-
-      it 'outputs the current turn and new feedback specific to each guess' do
-        expect(output).to receive(:round_feedback).with(9, 'one').ordered
-        expect(output).to receive(:round_feedback).with(8, 'two').ordered
-        expect(output).to receive(:round_feedback).with(7, 'three').ordered
-        expect(output).to receive(:round_feedback).with(6, 'four').ordered
-        expect(output).to receive(:round_feedback).with(5, 'five').ordered
-        expect(output).to receive(:round_feedback).with(4, 'six').ordered
-        expect(output).to receive(:round_feedback).with(3, 'seven').ordered
-        expect(output).to receive(:round_feedback).with(2, 'eight').ordered
-        expect(output).to receive(:round_feedback).with(1, 'nine').ordered
-        expect(output).to receive(:round_feedback).with(0, 'right').ordered
-
-        game.start
-      end
-      it 'generates a hint ten times' do
-        expect(validator).to receive(:hint).exactly(10).times
-        game.start
-      end
-      it 'stops prompting the player after a correct guess' do
-        expect(player).to receive(:guess).exactly(10).times
-        game.start
-      end
-      it 'checks if guess is correct ten times' do
-        expect(validator).to receive(:correct?).exactly(10).times
-        game.start
-      end
-      it 'reduces turns remaining nine times' do
-      expect(rules).to receive(:subtract_turn).exactly(9).times
-      end
-    end
-
     context 'player is never right' do
 
       before do
@@ -173,6 +128,10 @@ describe Game do
       end
       it 'checks if guess is correct ten times' do
         expect(validator).to receive(:correct?).exactly(10).times
+        game.start
+      end
+      it 'reduces turns remaining nine times' do
+        expect(rules).to receive(:subtract_turn).exactly(9).times
         game.start
       end
     end
