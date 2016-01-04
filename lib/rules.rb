@@ -32,7 +32,7 @@ class Rules
   end
 
   def valid_characters?(string)
-    split(string).drop_while { |char|
+    formatted(string).drop_while { |char|
       check_character?(char)
     }.empty?
   end
@@ -45,7 +45,7 @@ class Rules
     input.length == 4
   end
 
-  def split(string)
-    string.split('')
+  def formatted(string)
+    string.downcase.split('')
   end
 end

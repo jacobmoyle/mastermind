@@ -12,6 +12,9 @@ describe Rules do
       it 'returns false if the input is less than 4' do
         expect(subject.valid_guess?('cac')).to eq(false)
       end
+      it 'it handles mixed case input' do
+        expect(subject.valid_guess?('cCcC')).to eq(true)
+      end
     end
 
     context 'when using incorrect characters' do
