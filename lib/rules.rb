@@ -1,9 +1,8 @@
 class Rules
   attr_reader :turns
 
-  def initialize(total_turns = 10, code_length = 4)
-    @length = code_length
-    @turns  = total_turns
+  def initialize(total_turns = 10)
+    @turns = total_turns
   end
 
   def valid_guess?(input)
@@ -11,25 +10,39 @@ class Rules
   end
 
   def game_over?(guess_outcome)
-    guess_outcome || @turns == 0
+    guess_outcome || out_of_turns?
   end
 
   def subtract_turn
-    @turns -= 1
-    raise "No turns remain" if @turns == -1
+    @turns -= 1 unless turn_error
   end
 
   private
 
+  def turn_error
+    raise_turn_error if out_of_turns?
+  end
+
+  def out_of_turns?
+    @turns == 0
+  end
+
+  def raise_turn_error
+    raise "No turns remain"
+  end
+
   def valid_characters?(string)
-    valid_char = ['a','b','c','d','e','f']
     split(string).drop_while { |char|
-      valid_char.include?(char)
+      valid_character?(char)
     }.empty?
   end
 
+  def valid_character?(char)
+    ['a','b','c','d','e','f'].include?(char)
+  end
+
   def correct_length?(input)
-    input.length == @length
+    input.length == 4
   end
 
   def split(string)
