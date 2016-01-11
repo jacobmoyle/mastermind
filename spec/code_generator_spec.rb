@@ -7,7 +7,7 @@ describe CodeGenerator do
       expect(subject.generate.class).to be(String)
     end
     it 'provides an output with four characters' do
-      expect(subject.generate.length == 4).to be(true)
+      expect(subject.generate.length).to eq(4)
     end
     it 'does not output blank spaces' do
       expect(subject.generate.include?(" ")).not_to be(true)
