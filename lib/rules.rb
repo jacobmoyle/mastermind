@@ -9,8 +9,8 @@ class Rules
     correct_length?(input) && valid_characters?(input)
   end
 
-  def game_over?(guess_outcome)
-    guess_outcome || out_of_turns?
+  def game_over?(guess_feedback)
+    winning_feedback?(guess_feedback) || out_of_turns?
   end
 
   def subtract_turn
@@ -19,6 +19,10 @@ class Rules
   end
 
   private
+
+  def winning_feedback?(feedback)
+    feedback == 'oooo'
+  end
 
   def out_of_turns?
     @turns == 0

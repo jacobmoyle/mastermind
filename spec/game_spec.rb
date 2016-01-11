@@ -26,13 +26,13 @@ describe Game do
     context 'when input is incorrect' do
 
       before do
-        allow(validator).to receive(:hint).and_return('feedback')
+        allow(validator).to receive(:feedback).and_return('feedback')
         allow(player).to receive(:guess).and_return('wrong','valid')
         allow(rules).to receive(:valid_guess?).with('wrong').and_return(false)
         allow(rules).to receive(:valid_guess?).with('valid').and_return(true)
         allow(code_maker).to receive(:generate).and_return('code')
         allow(rules).to receive(:game_over?).and_return(false,true)
-        allow(validator).to receive(:correct?).and_return(true)
+        allow(rules).to receive(:winning_feedback?).with(any_args).and_return(true)
       end
 
       it 'an error will be sent to the user' do
@@ -52,10 +52,9 @@ describe Game do
 
       before do
         allow(rules).to receive(:game_over?).and_return(true)
-        allow(validator).to receive(:hint).and_return('correct')
+        allow(validator).to receive(:feedback).and_return('correct')
         allow(player).to receive(:guess).and_return('abcd')
         allow(code_maker).to receive(:generate).and_return('abcd')
-        allow(validator).to receive(:correct?).and_return(true)
       end
 
       it "outputs '9' turns remaining and 'correct' for feedback" do
@@ -63,7 +62,7 @@ describe Game do
         game.start
       end
       it 'checks if guess is correct once' do
-        expect(validator).to receive(:correct?).once
+        expect(rules).to receive(:game_over?).with(any_args).once
         game.start
       end
       it 'stops prompting the player after a correct guess' do
@@ -88,32 +87,45 @@ describe Game do
     context 'player is right on the 10th guess' do
 
       before do
-        allow(rules).to receive(:game_over?).and_return(
-          false,false,false,false,false,false,false,false,false,true)
+        allow(rules).to receive(:game_over?).and_return(false)
+        allow(rules).to receive(:game_over?).with('right').and_return(true)
         allow(code_maker).to receive(:generate).and_return('ffff')
-        allow(player).to receive(:guess).and_return(
-          'aaaa','bbbb','cccc','dddd','eeee','abcd','aacc','eeff','bcde','ffff')
-        allow(validator).to receive(:hint).and_return(
+        allow(player).to receive(:guess).and_return('aaaa')
+        allow(validator).to receive(:feedback).and_return(
           'one','two','three','four','five','six','seven','eight','nine','right')
-        allow(validator).to receive(:correct?).and_return(
-          false,false,false,false,false,false,false,false,false,true)
       end
-
-      it 'outputs the current turn and corresponding guess feedback' do
-        expect(output).to receive(:round_feedback).with(9, 'one').ordered
-        expect(output).to receive(:round_feedback).with(8, 'two').ordered
-        expect(output).to receive(:round_feedback).with(7, 'three').ordered
-        expect(output).to receive(:round_feedback).with(6, 'four').ordered
-        expect(output).to receive(:round_feedback).with(5, 'five').ordered
-        expect(output).to receive(:round_feedback).with(4, 'six').ordered
-        expect(output).to receive(:round_feedback).with(3, 'seven').ordered
-        expect(output).to receive(:round_feedback).with(2, 'eight').ordered
-        expect(output).to receive(:round_feedback).with(1, 'nine').ordered
-        expect(output).to receive(:round_feedback).with(0, 'right').ordered
+      HASH = {
+        'one' => 9,
+        'two' => 8,
+        'three' => 7,
+        'four' => 6,
+        'five' => 5,
+        'six' => 4,
+        'seven' => 3,
+        'eight' => 2,
+        'nine' => 1,
+        'right' => 0,
+      }.each { |key, value|
+        it "outputs #{key} and #{value} as feedback" do
+          expect(output).to receive(:round_feedback).with(value, key).ordered
         game.start
-      end
+        end
+      }
+      # it 'outputs the current turn and corresponding guess feedback' do
+      #   expect(output).to receive(:round_feedback).with(9, 'one').ordered
+      #   expect(output).to receive(:round_feedback).with(8, 'two').ordered
+      #   expect(output).to receive(:round_feedback).with(7, 'three').ordered
+      #   expect(output).to receive(:round_feedback).with(6, 'four').ordered
+      #   expect(output).to receive(:round_feedback).with(5, 'five').ordered
+      #   expect(output).to receive(:round_feedback).with(4, 'six').ordered
+      #   expect(output).to receive(:round_feedback).with(3, 'seven').ordered
+      #   expect(output).to receive(:round_feedback).with(2, 'eight').ordered
+      #   expect(output).to receive(:round_feedback).with(1, 'nine').ordered
+      #   expect(output).to receive(:round_feedback).with(0, 'right').ordered
+      #   game.start
+      # end
       it 'generates a hint ten times' do
-        expect(validator).to receive(:hint).exactly(10).times
+        expect(validator).to receive(:feedback).exactly(10).times
         game.start
       end
       it 'stops prompting the player after a correct guess' do
@@ -121,7 +133,7 @@ describe Game do
         game.start
       end
       it 'checks if guess is correct ten times' do
-        expect(validator).to receive(:correct?).exactly(10).times
+        expect(rules).to receive(:game_over?).with(any_args).exactly(10).times
         game.start
       end
       it 'reduces turns remaining ten times' do
@@ -135,10 +147,10 @@ describe Game do
       before do
         allow(rules).to receive(:game_over?).and_return(
           false,false,false,false,false,false,false,false,false,true)
-        allow(validator).to receive(:hint).and_return('incorrect')
+        allow(validator).to receive(:feedback).and_return('incorrect')
         allow(player).to receive(:guess).and_return('aaaa')
         allow(code_maker).to receive(:generate).and_return('ffff')
-        allow(validator).to receive(:correct?).and_return(false)
+        allow(rules).to receive(:winning_feedback?).with(any_args).and_return(false)
       end
 
       it 'outputs the turn and corresponding guess feedback' do

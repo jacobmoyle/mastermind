@@ -1,4 +1,4 @@
-class GuessValidator
+class GuessFeedback
   def initialize(params)
     @code  = formatted(params[:hidden_code])
     @guess = formatted(params[:guess])
@@ -8,7 +8,7 @@ class GuessValidator
     @code == @guess
   end
 
-  def hint
+  def feedback
     @hint ||= exact_feedback.concat(character_feedback).join
   end
 

@@ -13,8 +13,8 @@ class Game
     loop do
       start_turn
       guess = new_guess(code, valid_guess)
-      output_round_feedback(remaining_turns, guess.hint)
-      break if conditions_met(guess.correct?)
+      output_round_feedback(remaining_turns, guess.feedback)
+      break if conditions_met(guess.feedback)
     end
 
     output_end
