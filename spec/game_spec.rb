@@ -94,36 +94,20 @@ describe Game do
         allow(validator).to receive(:feedback).and_return(
           'one','two','three','four','five','six','seven','eight','nine','right')
       end
-      HASH = {
-        'one' => 9,
-        'two' => 8,
-        'three' => 7,
-        'four' => 6,
-        'five' => 5,
-        'six' => 4,
-        'seven' => 3,
-        'eight' => 2,
-        'nine' => 1,
-        'right' => 0,
-      }.each { |key, value|
-        it "outputs #{key} and #{value} as feedback" do
-          expect(output).to receive(:round_feedback).with(value, key).ordered
+
+      it 'outputs the current turn and corresponding guess feedback' do
+        expect(output).to receive(:round_feedback).with(9, 'one').ordered
+        expect(output).to receive(:round_feedback).with(8, 'two').ordered
+        expect(output).to receive(:round_feedback).with(7, 'three').ordered
+        expect(output).to receive(:round_feedback).with(6, 'four').ordered
+        expect(output).to receive(:round_feedback).with(5, 'five').ordered
+        expect(output).to receive(:round_feedback).with(4, 'six').ordered
+        expect(output).to receive(:round_feedback).with(3, 'seven').ordered
+        expect(output).to receive(:round_feedback).with(2, 'eight').ordered
+        expect(output).to receive(:round_feedback).with(1, 'nine').ordered
+        expect(output).to receive(:round_feedback).with(0, 'right').ordered
         game.start
-        end
-      }
-      # it 'outputs the current turn and corresponding guess feedback' do
-      #   expect(output).to receive(:round_feedback).with(9, 'one').ordered
-      #   expect(output).to receive(:round_feedback).with(8, 'two').ordered
-      #   expect(output).to receive(:round_feedback).with(7, 'three').ordered
-      #   expect(output).to receive(:round_feedback).with(6, 'four').ordered
-      #   expect(output).to receive(:round_feedback).with(5, 'five').ordered
-      #   expect(output).to receive(:round_feedback).with(4, 'six').ordered
-      #   expect(output).to receive(:round_feedback).with(3, 'seven').ordered
-      #   expect(output).to receive(:round_feedback).with(2, 'eight').ordered
-      #   expect(output).to receive(:round_feedback).with(1, 'nine').ordered
-      #   expect(output).to receive(:round_feedback).with(0, 'right').ordered
-      #   game.start
-      # end
+      end
       it 'generates a hint ten times' do
         expect(validator).to receive(:feedback).exactly(10).times
         game.start

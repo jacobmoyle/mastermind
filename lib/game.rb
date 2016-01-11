@@ -12,9 +12,9 @@ class Game
     output_start
     loop do
       start_turn
-      guess = new_guess(code, valid_guess)
-      output_round_feedback(remaining_turns, guess.feedback)
-      break if conditions_met(guess.feedback)
+      feedback = feedback_for(new_guess(code, valid_guess))
+      output_round_feedback(remaining_turns, feedback)
+      break if conditions_met(feedback)
     end
 
     output_end
@@ -53,6 +53,10 @@ class Game
 
   def output_end
     @output.goodbye
+  end
+
+  def feedback_for(guess)
+    guess.feedback
   end
 
   def new_guess(code, new_guess)
