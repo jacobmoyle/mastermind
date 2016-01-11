@@ -10,7 +10,7 @@ describe CodeGenerator do
       expect(subject.generate.length == 4).to be(true)
     end
     it 'does not output blank spaces' do
-      expect(subject.generate.include?(" ")).to be(false)
+      expect(subject.generate.include?(" ")).not_to be(true)
     end
 
     it 'returns unique patterns 75% of the time' do
