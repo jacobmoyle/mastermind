@@ -14,14 +14,11 @@ class Rules
   end
 
   def subtract_turn
-    @turns -= 1 unless turn_error
+    raise_turn_error if out_of_turns?
+    @turns -= 1
   end
 
   private
-
-  def turn_error
-    raise_turn_error if out_of_turns?
-  end
 
   def out_of_turns?
     @turns == 0
