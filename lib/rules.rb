@@ -6,7 +6,8 @@ class Rules
   end
 
   def valid_guess?(input)
-    correct_length?(input) && valid_characters?(input)
+    formatted_input = format(input)
+    correct_length?(formatted_input) && all_valid?(formatted_input)
   end
 
   def game_over?(guess_feedback)
@@ -32,21 +33,19 @@ class Rules
     raise "No turns remain"
   end
 
-  def valid_characters?(string)
-    formatted(string).drop_while { |char|
-      check_character?(char)
-    }.empty?
+  def all_valid?(array)
+    array.any?{ |char| invalid?(char) } ? false : true
   end
 
-  def check_character?(char)
-    ['a','b','c','d','e','f'].include?(char)
+  def invalid?(char)
+    ['a','b','c','d','e','f'].include?(char) ? false : true
   end
 
-  def correct_length?(input)
-    input.length == 4
+  def correct_length?(code)
+    code.length == 4
   end
 
-  def formatted(string)
+  def format(string)
     string.downcase.split('')
   end
 end
