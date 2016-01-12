@@ -8,7 +8,7 @@ bundle install
 ```
 Start the game with:
 ```
-ruby runner.rb
+ruby bin/runner.rb
 ```
 
 ## Running Tests

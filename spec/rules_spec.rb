@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe Rules do
   describe '#valid_guess?' do
@@ -63,7 +63,7 @@ describe Rules do
         new_rules = Rules.new
         9.times {
           new_rules.subtract_turn
-          expect(new_rules.game_over?(false)).to eq(false)
+          expect(new_rules.game_over?('oo')).to eq(false)
         }
       end
       it 'returns true when no turns remain' do
@@ -71,14 +71,23 @@ describe Rules do
         10.times {
           new_rules.subtract_turn
         }
-        expect(new_rules.game_over?(false)).to eq(true)
+        expect(new_rules.game_over?('oo')).to eq(true)
+      end
+      it 'returns false when feedback contains too many "o"s' do
+        expect(subject.game_over?('ooooo')).to eq(false)
+      end
+      it 'returns false when feedback contains too few "o"s' do
+        expect(subject.game_over?('oo')).to eq(false)
+      end
+      it 'returns false when feedback four different characters' do
+        expect(subject.game_over?('rabo')).to eq(false)
       end
     end
 
     context 'when guess is correct' do
       it 'returns true when there are turns left' do
         new_rules = Rules.new
-        expect(new_rules.game_over?(true)).to eq(true)
+        expect(new_rules.game_over?('oooo')).to eq(true)
       end
     end
   end

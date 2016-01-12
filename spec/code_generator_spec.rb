@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe CodeGenerator do
 
@@ -7,17 +7,14 @@ describe CodeGenerator do
       expect(subject.generate.class).to be(String)
     end
     it 'provides an output with four characters' do
-      expect(subject.generate.length == 4).to be(true)
+      expect(subject.generate.length).to eq(4)
     end
     it 'does not output blank spaces' do
-      expect(subject.generate.include?(" ")).to be(false)
+      expect(subject.generate.include?(" ")).not_to be(true)
     end
 
     it 'returns unique patterns 75% of the time' do
-      patterns = []
-      500.times do
-        patterns << subject.generate
-      end
+      patterns = patterns = 500.times.map{ subject.generate }
       expect(patterns.uniq.count / (patterns.count).to_f).to be >= 0.75
     end
   end

@@ -1,9 +1,9 @@
 require 'simplecov'
 SimpleCov.start
 
-require_relative '../lib/game'
-require_relative '../lib/view'
-require_relative '../lib/code_generator'
-require_relative '../lib/guess_validator'
-require_relative '../lib/player'
-require_relative '../lib/rules'
+require 'game'
+require 'view'
+require 'code_generator'
+require 'guess_feedback'
+require 'player'
+require 'rules'
